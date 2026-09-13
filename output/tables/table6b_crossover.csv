@@ -1,0 +1,15 @@
+us_group,nigeria_reference,crossover_percentile,us_burden_at_crossover_pct,crosses_below_grid
+All US families,All Nigerian households,99.49999999999996,70.34575312635947,False
+All US families,Nigerian informal households,99.49999999999996,70.34575312635947,False
+Insured all year,All Nigerian households,99.49999999999996,68.11294958854157,False
+Insured all year,Nigerian informal households,99.49999999999996,68.11294958854157,False
+Partly uninsured,All Nigerian households,98.99999999999996,51.63375325790187,False
+Partly uninsured,Nigerian informal households,98.99999999999996,51.63375325790187,False
+Uninsured all year,All Nigerian households,98.49999999999996,40.759300304878636,False
+Uninsured all year,Nigerian informal households,98.99999999999996,57.62413609145057,False
+Poor or near poor,All Nigerian households,84.49999999999996,11.27582407693052,False
+Poor or near poor,Nigerian informal households,84.99999999999997,11.89299209098934,False
+Chronic condition,All Nigerian households,99.49999999999996,77.3724336020003,False
+Chronic condition,Nigerian informal households,99.49999999999996,77.3724336020003,False
+Elderly member,All Nigerian households,98.49999999999996,43.675890548883174,False
+Elderly member,Nigerian informal households,98.99999999999996,59.26994937687608,False
