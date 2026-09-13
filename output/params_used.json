@@ -1,0 +1,79 @@
+{
+  "params": {
+    "SEED": 2026,
+    "LONELY_PSU": "adjust",
+    "MEPS_FILES": "{2019: 'h216.dta', 2020: 'h224.dta', 2021: 'h233.dta', 2022: 'h243.dta', 2023: 'h251.dta', 2024: 'h256.dta'}",
+    "MEPS_POOLED_LINKAGE": "h36u24.dta",
+    "PANDEMIC_YEARS": "(2020,)",
+    "BASE_YEAR": 2024,
+    "CPI_TO_BASE": "{2019: 1.22699, 2020: 1.21204, 2021: 1.15765, 2022: 1.07187, 2023: 1.0295, 2024: 1.0}",
+    "RESOURCE_FLOOR": "poverty_line",
+    "INCOME_FLOOR_USD": 1000.0,
+    "CHE_BUDGET_THRESHOLDS": "(0.1, 0.25, 0.4)",
+    "CHE_CTP_THRESHOLD": 0.4,
+    "EQ_SCALE_POWER": 0.56,
+    "UNDERINSURED_OOP_SHARE": 0.1,
+    "UNDERINSURED_LOW_INCOME_SHARE": 0.05,
+    "UNDERINSURED_LOW_INCOME_FPL": 2.0,
+    "UNDERINSURED_INCLUDES_DEDUCTIBLE": false,
+    "VAR_LEVELS": "(0.9, 0.95, 0.99)",
+    "CVAR_LEVELS": "(0.9, 0.95, 0.99)",
+    "GPD_THRESHOLD_QUANTILE": 0.9,
+    "GPD_THRESHOLD_GRID": "(0.85, 0.9, 0.95)",
+    "N_BOOTSTRAP": 1000,
+    "PARITY_REFERENCE_QUANTILES": "(0.5, 0.75)",
+    "NGN_PRICE_BASE": "August 2023",
+    "PPP_NGN_PER_INTL_USD": null,
+    "FIG_DPI": 300,
+    "PALETTE": "{'us': '#1B4F72', 'us_light': '#5499C7', 'ng': '#A04000', 'ng_light': '#DC7633', 'ink': '#1A1A1A', 'muted': '#7F8C8D', 'rule': '#D5D8DC', 'accent': '#117A65', 'warn': '#B7950B'}"
+  },
+  "versions": {
+    "python": "3.14.6",
+    "numpy": "2.5.3",
+    "pandas": "3.0.5",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2"
+  },
+  "timings": [
+    {
+      "step": "Build the US family file from MEPS",
+      "module": "build_meps",
+      "seconds": 6.0
+    },
+    {
+      "step": "Put Nigeria on the harmonised basis",
+      "module": "build_nigeria",
+      "seconds": 3.4
+    },
+    {
+      "step": "Harmonised catastrophic spending",
+      "module": "burden",
+      "seconds": 0.9
+    },
+    {
+      "step": "Tail risk: VaR, CVaR and GPD fits",
+      "module": "tailrisk",
+      "seconds": 16.0
+    },
+    {
+      "step": "Parity and crossover",
+      "module": "parity",
+      "seconds": 2.0
+    },
+    {
+      "step": "Figures",
+      "module": "exhibits",
+      "seconds": 1.0
+    },
+    {
+      "step": "Manuscript number check",
+      "module": "check_manuscript",
+      "seconds": 0.0
+    },
+    {
+      "step": "Submission documents",
+      "module": "make_manuscript",
+      "seconds": 1.7
+    }
+  ]
+}

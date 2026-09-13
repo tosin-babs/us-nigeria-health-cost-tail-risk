@@ -24,6 +24,8 @@ STEPS = [
     ("Tail risk: VaR, CVaR and GPD fits", "tailrisk"),
     ("Parity and crossover", "parity"),
     ("Figures", "exhibits"),
+    ("Manuscript number check", "check_manuscript"),
+    ("Submission documents", "make_manuscript"),
 ]
 
 
