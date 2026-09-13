@@ -120,7 +120,7 @@ The widest gap of all is in the share of households with no capacity to pay what
 
 **Figure 1.** Catastrophic spending on harmonised definitions. Bars are survey-weighted; whiskers are 95% design-based confidence intervals.
 
-Nothing here is surprising, and this is the comparison the literature already supports. It is also, we will argue, the least informative comparison available.
+Table 1b breaks both countries down by subgroup. Nothing here is surprising, and this is the comparison the literature already supports. It is also, we will argue, the least informative comparison available.
 
 ### 5.2 In the tail, the ordering reverses
 
@@ -147,7 +147,7 @@ Table 3 gives the tail measures and Figure 3 the shape estimates. The result is 
 
 For all US families the generalised Pareto shape is **ξ = +0.672 (95% CI 0.625 to 0.718)**. For all Nigerian households it is **ξ = +0.088 (−0.063 to 0.205)**. Every US group lies above every Nigerian group and no US interval overlaps any Nigerian interval. Values above one half imply infinite variance; every US group is above it and no Nigerian group comes close. Four of the six Nigerian groups have a point estimate below zero, which implies a tail with a finite upper bound.
 
-The estimates are stable where it matters. Across thresholds at the 85th, 90th and 95th percentiles the US shape moves between 0.60 and 0.80 and never approaches the Nigerian range; the Nigerian shape hovers around zero and turns more negative at higher thresholds, which is what a bounded tail looks like.
+The estimates are stable where it matters. Across thresholds at the 85th, 90th and 95th percentiles (Table A2) the US shape moves between 0.60 and 0.80 and never approaches the Nigerian range; the Nigerian shape hovers around zero and turns more negative at higher thresholds, which is what a bounded tail looks like.
 
 ![](../output/figures/figure3_tail_index.png)
 
@@ -167,7 +167,7 @@ Table 4 gives the parity results, and they are the most directly interpretable n
 
 **37.0% of all US families** carry a burden heavier than the *median* Nigerian informal household. Among families with an elderly member the figure is **50.4%**; among families with a chronic condition, 41.5%. Against the Nigerian informal upper quartile, 11.6% of all US families are above it, rising to 21.4% among the poor and near-poor. Against its 90th percentile, 3.8% of all US families and **11.1% of poor US families** are above.
 
-The crossover analysis locates the same result differently. All US families overtake Nigeria's informal sector at the 99.5th percentile of their own distribution. Families with an elderly member cross at the 99th. **Poor and near-poor families cross at the 85th** — above that point, a poor American family carries a heavier relative burden than a Nigerian informal household at the same rank in its own distribution.
+The crossover analysis (Table 5) locates the same result differently. All US families overtake Nigeria's informal sector at the 99.5th percentile of their own distribution. Families with an elderly member cross at the 99th. **Poor and near-poor families cross at the 85th** — above that point, a poor American family carries a heavier relative burden than a Nigerian informal household at the same rank in its own distribution.
 
 ![](../output/figures/figure5_parity.png)
 
@@ -175,7 +175,7 @@ The crossover analysis locates the same result differently. All US families over
 
 ### 5.5 Insurance compresses the middle without truncating the tail
 
-Grouping by insurance status gives a result that looks wrong until the mechanism is clear. Families insured all year have a *higher* median burden (1.13%) than families uninsured all year (0.28%), and higher mean out-of-pocket spending ($1,699 against $1,237). The uninsured are not better protected. They use less care, and out-of-pocket spending cannot record care that was never sought — the same censoring that makes every catastrophic-spending measure understate unmet need.
+Table 6 gives the burden quantiles for every group in both countries. Grouping by insurance status gives a result that looks wrong until the mechanism is clear. Families insured all year have a *higher* median burden (1.13%) than families uninsured all year (0.28%), and higher mean out-of-pocket spending ($1,699 against $1,237). The uninsured are not better protected. They use less care, and out-of-pocket spending cannot record care that was never sought — the same censoring that makes every catastrophic-spending measure understate unmet need.
 
 In the tail the groups converge and then invert. At the 95th percentile the uninsured burden (14.40%) exceeds the insured (13.60%); at the 99th the gap is wide, 57.6% against 41.5%. The shape parameters tell the same story: 0.659 for the insured, 0.594 for the uninsured, 0.737 for the partly uninsured — all heavy, none meaningfully protected in the tail.
 
