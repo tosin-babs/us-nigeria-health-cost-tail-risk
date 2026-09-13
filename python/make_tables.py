@@ -163,6 +163,42 @@ def main():
                      ["Country", "Quantile", "Term", "Coefficient (pp)", "SE",
                       "t", ""])]
 
+    # ---- Table 8 -----------------------------------------------------------
+    t8 = pd.read_csv(T / "table8_ppp_absolute.csv")
+    parts += [caption(8, "Out-of-pocket spending in 2023 international dollars.",
+                      "Converted at the World Bank private-consumption PPP "
+                      "factor. A PPP for private consumption is not a medical "
+                      "price index; the comparison indicates what households "
+                      "pay, not what they buy."),
+              render(t8, ["country", "mean_oop_household", "mean_oop_per_person",
+                          "mean_resources_per_person", "oop_pc_q50",
+                          "oop_pc_q90", "oop_pc_q99"],
+                     [None, auto(0), auto(0), auto(0), auto(0), auto(0),
+                      auto(0)],
+                     ["Country", "Mean OOP, household", "Mean OOP, per person",
+                      "Mean resources, per person", "q50 p.p.", "q90 p.p.",
+                      "q99 p.p."])]
+
+    # ---- Table 9 -----------------------------------------------------------
+    t9 = pd.read_csv(T / "table9_robustness.csv")
+    parts += [caption(9, "Robustness: the comparison under eleven variants.",
+                      "A variant matters only if it reverses the US-Nigeria "
+                      "ordering, not if it moves a level. The capacity-to-pay "
+                      "column is the one that is not robust; see Section 5.7."),
+              render(t9, ["variant", "country", "n", "che10_pct", "ctp40_pct",
+                          "var95_pct", "cvar95_pct", "xi"],
+                     [None, None, auto(0), auto(2), auto(2), auto(2), auto(2),
+                      lambda x: f"{x:+.3f}"],
+                     ["Variant", "Country", "n", "CHE10 %", "CTP40 %",
+                      "VaR95 %", "CVaR95 %", "ξ"])]
+
+    t9b = pd.read_csv(T / "table9b_robustness_checks.csv")
+    parts += [caption("9b", "Do the paper's two claims hold in every variant?"),
+              render(t9b, list(t9b.columns),
+                     [None] + [(lambda x: "yes" if x else "NO")
+                               for _ in t9b.columns[1:]],
+                     list(t9b.columns))]
+
     # ---- Appendix ----------------------------------------------------------
     parts += ["\n\n# Appendix tables\n"]
 

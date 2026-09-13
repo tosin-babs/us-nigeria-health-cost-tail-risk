@@ -38,7 +38,7 @@
     {
       "step": "Build the US family file from MEPS",
       "module": "build_meps",
-      "seconds": 6.1
+      "seconds": 6.3
     },
     {
       "step": "Put Nigeria on the harmonised basis",
@@ -53,17 +53,27 @@
     {
       "step": "Tail risk: VaR, CVaR and GPD fits",
       "module": "tailrisk",
-      "seconds": 16.1
+      "seconds": 16.6
     },
     {
       "step": "Parity and crossover",
       "module": "parity",
-      "seconds": 2.0
+      "seconds": 2.1
     },
     {
       "step": "Drivers of the upper tail",
       "module": "rif",
       "seconds": 0.7
+    },
+    {
+      "step": "Absolute comparison in PPP dollars",
+      "module": "absolute",
+      "seconds": 0.1
+    },
+    {
+      "step": "Robustness grid",
+      "module": "robustness",
+      "seconds": 0.5
     },
     {
       "step": "Figures",
@@ -78,7 +88,7 @@
     {
       "step": "Submission documents",
       "module": "make_manuscript",
-      "seconds": 1.7
+      "seconds": 1.8
     }
   ]
 }

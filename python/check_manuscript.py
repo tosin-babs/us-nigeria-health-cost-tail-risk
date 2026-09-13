@@ -35,6 +35,9 @@ def load():
     t6b = t6b.set_index("us_group")
     t7 = pd.read_csv(T / "table7_rif.csv")
     t7 = t7.set_index(["country", "quantile", "term"])
+    t8 = pd.read_csv(T / "table8_ppp_absolute.csv").set_index("country")
+    t9 = pd.read_csv(T / "table9_robustness.csv")
+    t9 = t9.set_index(["variant", "country"])
 
     US, NG = "United States", "Nigeria"
     checks = {
@@ -61,6 +64,12 @@ def load():
             f'{t7.loc[("United States", 0.95, "Below the poverty line"), "coef_pp"]:.2f}',
         "RIF poverty q95, Nigeria":
             f'{t7.loc[("Nigeria", 0.95, "Below the poverty line"), "coef_pp"]:.2f}'.lstrip("-"),
+        "PPP mean OOP p.p., US":
+            f'${t8.loc[US, "mean_oop_per_person"]:,.0f}',
+        "PPP mean OOP p.p., Nigeria":
+            f'${t8.loc[NG, "mean_oop_per_person"]:,.0f}',
+        "food-share floor, Nigeria CTP":
+            f'{t9.loc[("Nigeria: food-share floor", NG), "ctp40_pct"]:.1f}%',
         "crossover, poor US":
             f'{t6b.loc["Poor or near poor", "crossover_percentile"]:.0f}th',
     }

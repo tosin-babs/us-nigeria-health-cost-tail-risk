@@ -24,6 +24,8 @@ STEPS = [
     ("Tail risk: VaR, CVaR and GPD fits", "tailrisk"),
     ("Parity and crossover", "parity"),
     ("Drivers of the upper tail", "rif"),
+    ("Absolute comparison in PPP dollars", "absolute"),
+    ("Robustness grid", "robustness"),
     ("Figures", "exhibits"),
     ("Manuscript number check", "check_manuscript"),
     ("Submission documents", "make_manuscript"),

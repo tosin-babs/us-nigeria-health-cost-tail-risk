@@ -295,6 +295,60 @@
 | Nigeria | q95 | Any child | 1.59 | 2.76 | 0.58 |  |
 | Nigeria | q95 | Household size | 0.11 | 0.33 | 0.34 |  |
 
+**Table 8.** Out-of-pocket spending in 2023 international dollars.
+
+*Converted at the World Bank private-consumption PPP factor. A PPP for private consumption is not a medical price index; the comparison indicates what households pay, not what they buy.*
+
+| Country | Mean OOP, household | Mean OOP, per person | Mean resources, per person | q50 p.p. | q90 p.p. | q99 p.p. |
+|---|---:|---:|---:|---:|---:|---:|
+| United States | 2,303 | 1,194 | 48,309 | 411 | 2,702 | 11,449 |
+| Nigeria | 499 | 142 | 2,279 | 24 | 318 | 1,795 |
+
+**Table 9.** Robustness: the comparison under eleven variants.
+
+*A variant matters only if it reverses the US-Nigeria ordering, not if it moves a level. The capacity-to-pay column is the one that is not robust; see Section 5.7.*
+
+| Variant | Country | n | CHE10 % | CTP40 % | VaR95 % | CVaR95 % | ξ |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Baseline | United States | 61,447 | 7.39 | 10.98 | 13.55 | 42.90 | +0.672 |
+| Baseline | Nigeria | 4,685 | 17.24 | 39.51 | 25.01 | 38.09 | +0.088 |
+| Excluding 2020 (pandemic) | United States | 49,595 | 7.47 | 10.96 | 13.61 | 44.19 | +0.683 |
+| Excluding 2020 (pandemic) | Nigeria | 4,685 | 17.24 | 39.51 | 25.01 | 38.09 | +0.088 |
+| US 2024 only | United States | 8,104 | 7.81 | 10.35 | 13.62 | 48.18 | +0.750 |
+| US 2024 only | Nigeria | 4,685 | 17.24 | 39.51 | 25.01 | 38.09 | +0.088 |
+| US 2019 only | United States | 11,547 | 7.84 | 11.86 | 13.92 | 43.94 | +0.628 |
+| US 2019 only | Nigeria | 4,685 | 17.24 | 39.51 | 25.01 | 38.09 | +0.088 |
+| Income floor $500 | United States | 61,530 | 7.46 | 11.06 | 13.75 | 46.96 | +0.707 |
+| Income floor $500 | Nigeria | 4,685 | 17.24 | 39.51 | 25.01 | 38.09 | +0.088 |
+| Income floor $2,000 | United States | 61,216 | 7.27 | 10.75 | 13.33 | 37.16 | +0.615 |
+| Income floor $2,000 | Nigeria | 4,685 | 17.24 | 39.51 | 25.01 | 38.09 | +0.088 |
+| Income floor $5,000 | United States | 60,527 | 7.02 | 10.18 | 12.90 | 32.69 | +0.558 |
+| Income floor $5,000 | Nigeria | 4,685 | 17.24 | 39.51 | 25.01 | 38.09 | +0.088 |
+| Nigeria: food-share floor | United States | 61,447 | 7.39 | 10.98 | 13.55 | 42.90 | +0.672 |
+| Nigeria: food-share floor | Nigeria | 4,685 | 17.24 | 10.79 | 25.01 | 38.09 | +0.088 |
+| Per equivalent adult | United States | 61,447 | 7.39 | 8.62 | 13.55 | 42.90 | +0.672 |
+| Per equivalent adult | Nigeria | 4,685 | 17.24 | 15.50 | 25.01 | 38.09 | +0.088 |
+| GPD threshold q85 | United States | 61,447 | 7.39 | 10.98 | 13.55 | 42.90 | +0.643 |
+| GPD threshold q85 | Nigeria | 4,685 | 17.24 | 39.51 | 25.01 | 38.09 | +0.081 |
+| GPD threshold q95 | United States | 61,447 | 7.39 | 10.98 | 13.55 | 42.90 | +0.670 |
+| GPD threshold q95 | Nigeria | 4,685 | 17.24 | 39.51 | 25.01 | 38.09 | +0.007 |
+
+**Table 9b.** Do the paper's two claims hold in every variant?
+
+| variant | Nigeria worse on CHE10 | US tail heavier (xi) |
+|---|---:|---:|
+| Baseline | yes | yes |
+| Excluding 2020 (pandemic) | yes | yes |
+| US 2024 only | yes | yes |
+| US 2019 only | yes | yes |
+| Income floor $500 | yes | yes |
+| Income floor $2,000 | yes | yes |
+| Income floor $5,000 | yes | yes |
+| Nigeria: food-share floor | yes | yes |
+| Per equivalent adult | yes | yes |
+| GPD threshold q85 | yes | yes |
+| GPD threshold q95 | yes | yes |
+
 
 # Appendix tables
 

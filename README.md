@@ -106,6 +106,9 @@ python3 -m venv .venv
 | Harmonised catastrophic spending | `python/burden.py` | Tables 1–3 |
 | Tail risk: VaR, CVaR, GPD | `python/tailrisk.py` | Tables 4–5 |
 | Parity and crossover | `python/parity.py` | Tables 6, 6b |
+| Drivers of the upper tail (RIF) | `python/rif.py` | Table 7 |
+| Absolute comparison in PPP dollars | `python/absolute.py` | Table 8 |
+| Robustness grid | `python/robustness.py` | Tables 9, 9b |
 | Figures | `python/exhibits.py` | `output/figures/*` |
 | Check the prose against the tables | `python/check_manuscript.py` | pass/fail |
 | Submission documents | `python/make_manuscript.py` | `manuscript/*.docx`, `*.pdf` |
@@ -119,6 +122,12 @@ headless Chrome rather than LaTeX.
 treat a household representing 40,000 others the same as one representing 400.
 Confidence intervals come from a bootstrap over primary sampling units within
 strata, not a naive resample, and propagate through the shape parameter.
+
+**The capacity-to-pay comparison is not robust, and the paper says so.** With
+the harmonised poverty-line floor, 39.5% of Nigerian households are catastrophic
+against 12.6% of US families. With Xu et al.'s food-share floor it is 10.8%
+against 11.0% — no gap. The budget-share and tail results survive all eleven
+robustness variants; this one does not, and nothing rests on it.
 
 **Half of Nigerian households have no capacity to pay.** They sit at or below
 the national poverty line, so the capacity-to-pay ratio is undefined for them.
