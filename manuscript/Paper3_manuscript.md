@@ -243,8 +243,6 @@ The two systems fail differently. One fails by making ordinary care unaffordable
 
 **Code availability.** Complete, seeded reproduction code in Python; see the repository README for the download steps and script order.
 
-**Funding.** *[to be completed]*
-
 **Competing interests.** None declared.
 
 **Ethics.** The analysis uses de-identified secondary survey data and did not require ethical approval.
