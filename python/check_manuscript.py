@@ -33,6 +33,8 @@ def load():
     t6b = pd.read_csv(T / "table6b_crossover.csv")
     t6b = t6b[t6b["nigeria_reference"] == "Nigerian informal households"]
     t6b = t6b.set_index("us_group")
+    t7 = pd.read_csv(T / "table7_rif.csv")
+    t7 = t7.set_index(["country", "quantile", "term"])
 
     US, NG = "United States", "Nigeria"
     checks = {
@@ -55,6 +57,10 @@ def load():
             f'{inf.loc[("All US families", 0.50), "us_share_above_pct"]:.1f}%',
         "parity, elderly vs NG median":
             f'{inf.loc[("Elderly member", 0.50), "us_share_above_pct"]:.1f}%',
+        "RIF poverty q95, US":
+            f'{t7.loc[("United States", 0.95, "Below the poverty line"), "coef_pp"]:.2f}',
+        "RIF poverty q95, Nigeria":
+            f'{t7.loc[("Nigeria", 0.95, "Below the poverty line"), "coef_pp"]:.2f}'.lstrip("-"),
         "crossover, poor US":
             f'{t6b.loc["Poor or near poor", "crossover_percentile"]:.0f}th',
     }

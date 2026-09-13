@@ -146,6 +146,23 @@ def main():
                      ["Group", "Country", "n", "q50 %", "q75 %", "q90 %",
                       "q95 %", "q99 %"])]
 
+    # ---- Table 7 -----------------------------------------------------------
+    t7 = pd.read_csv(T / "table7_rif.csv")
+    t7 = t7[t7["term"] != "(intercept)"]
+    t7["sig"] = t7["t"].abs().gt(1.96).map({True: "*", False: ""})
+    parts += [caption(7, "Unconditional quantile regression of burden.",
+                      "Firpo, Fortin and Lemieux (2009). The coefficient is the "
+                      "effect on that percentile of the population burden "
+                      "distribution, in percentage points of resources. "
+                      "Standard errors are clustered on the stratum-PSU pair; "
+                      "* marks |t| > 1.96."),
+              render(t7, ["country", "quantile", "term", "coef_pp", "se_pp",
+                          "t", "sig"],
+                     [None, lambda x: f"q{int(100 * x)}", None, auto(2),
+                      auto(2), auto(2), None],
+                     ["Country", "Quantile", "Term", "Coefficient (pp)", "SE",
+                      "t", ""])]
+
     # ---- Appendix ----------------------------------------------------------
     parts += ["\n\n# Appendix tables\n"]
 

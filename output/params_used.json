@@ -38,12 +38,12 @@
     {
       "step": "Build the US family file from MEPS",
       "module": "build_meps",
-      "seconds": 6.0
+      "seconds": 6.1
     },
     {
       "step": "Put Nigeria on the harmonised basis",
       "module": "build_nigeria",
-      "seconds": 3.4
+      "seconds": 1.7
     },
     {
       "step": "Harmonised catastrophic spending",
@@ -53,12 +53,17 @@
     {
       "step": "Tail risk: VaR, CVaR and GPD fits",
       "module": "tailrisk",
-      "seconds": 16.0
+      "seconds": 16.1
     },
     {
       "step": "Parity and crossover",
       "module": "parity",
       "seconds": 2.0
+    },
+    {
+      "step": "Drivers of the upper tail",
+      "module": "rif",
+      "seconds": 0.7
     },
     {
       "step": "Figures",

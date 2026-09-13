@@ -232,6 +232,69 @@
 | Nigeria, formal | Nigeria | 809 | 1.90 | 5.92 | 14.00 | 19.94 | 35.73 |
 | Nigeria, poorest quintile | Nigeria | 700 | 1.59 | 5.78 | 13.41 | 23.74 | 45.41 |
 
+**Table 7.** Unconditional quantile regression of burden.
+
+*Firpo, Fortin and Lemieux (2009). The coefficient is the effect on that percentile of the population burden distribution, in percentage points of resources. Standard errors are clustered on the stratum-PSU pair; * marks |t| > 1.96.*
+
+| Country | Quantile | Term | Coefficient (pp) | SE | t |  |
+|---|---:|---:|---:|---:|---:|---:|
+| United States | q50 | Below the poverty line | 0.09 | 0.04 | 2.15 | * |
+| United States | q50 | 1-2x the poverty line | 0.12 | 0.04 | 3.42 | * |
+| United States | q50 | Uninsured any part of the year | -0.45 | 0.05 | -9.62 | * |
+| United States | q50 | Any chronic condition | 0.79 | 0.04 | 22.43 | * |
+| United States | q50 | Any member aged 65+ | 0.71 | 0.03 | 23.66 | * |
+| United States | q50 | Any child | -0.03 | 0.05 | -0.58 |  |
+| United States | q50 | Household size | 0.04 | 0.02 | 2.03 | * |
+| United States | q75 | Below the poverty line | 1.88 | 0.12 | 15.86 | * |
+| United States | q75 | 1-2x the poverty line | 1.47 | 0.10 | 14.86 | * |
+| United States | q75 | Uninsured any part of the year | -0.73 | 0.11 | -6.86 | * |
+| United States | q75 | Any chronic condition | 1.28 | 0.08 | 16.32 | * |
+| United States | q75 | Any member aged 65+ | 1.78 | 0.09 | 19.55 | * |
+| United States | q75 | Any child | -0.16 | 0.11 | -1.41 |  |
+| United States | q75 | Household size | -0.01 | 0.04 | -0.13 |  |
+| United States | q90 | Below the poverty line | 9.64 | 0.45 | 21.32 | * |
+| United States | q90 | 1-2x the poverty line | 6.29 | 0.33 | 18.97 | * |
+| United States | q90 | Uninsured any part of the year | -0.75 | 0.37 | -1.99 | * |
+| United States | q90 | Any chronic condition | 2.54 | 0.23 | 11.04 | * |
+| United States | q90 | Any member aged 65+ | 4.46 | 0.27 | 16.41 | * |
+| United States | q90 | Any child | 0.02 | 0.33 | 0.05 |  |
+| United States | q90 | Household size | -0.38 | 0.11 | -3.45 | * |
+| United States | q95 | Below the poverty line | 25.24 | 1.20 | 21.12 | * |
+| United States | q95 | 1-2x the poverty line | 12.53 | 0.78 | 16.06 | * |
+| United States | q95 | Uninsured any part of the year | -0.66 | 0.85 | -0.78 |  |
+| United States | q95 | Any chronic condition | 4.01 | 0.47 | 8.55 | * |
+| United States | q95 | Any member aged 65+ | 7.72 | 0.60 | 12.96 | * |
+| United States | q95 | Any child | -0.45 | 0.80 | -0.57 |  |
+| United States | q95 | Household size | -0.84 | 0.25 | -3.32 | * |
+| Nigeria | q50 | Below the poverty line | -0.78 | 0.37 | -2.09 | * |
+| Nigeria | q50 | 1-2x the poverty line | -0.46 | 0.34 | -1.34 |  |
+| Nigeria | q50 | Uninsured any part of the year | 1.09 | 0.79 | 1.38 |  |
+| Nigeria | q50 | Any chronic condition | 2.45 | 0.34 | 7.32 | * |
+| Nigeria | q50 | Any member aged 65+ | 0.51 | 0.26 | 1.95 |  |
+| Nigeria | q50 | Any child | 1.18 | 0.25 | 4.71 | * |
+| Nigeria | q50 | Household size | 0.19 | 0.04 | 4.60 | * |
+| Nigeria | q75 | Below the poverty line | -0.97 | 0.88 | -1.09 |  |
+| Nigeria | q75 | 1-2x the poverty line | -0.75 | 0.81 | -0.92 |  |
+| Nigeria | q75 | Uninsured any part of the year | 1.72 | 1.77 | 0.97 |  |
+| Nigeria | q75 | Any chronic condition | 8.69 | 1.07 | 8.11 | * |
+| Nigeria | q75 | Any member aged 65+ | 2.13 | 0.64 | 3.34 | * |
+| Nigeria | q75 | Any child | 2.02 | 0.71 | 2.83 | * |
+| Nigeria | q75 | Household size | -0.10 | 0.09 | -1.12 |  |
+| Nigeria | q90 | Below the poverty line | -3.52 | 1.71 | -2.06 | * |
+| Nigeria | q90 | 1-2x the poverty line | -1.73 | 1.87 | -0.93 |  |
+| Nigeria | q90 | Uninsured any part of the year | 0.61 | 5.98 | 0.10 |  |
+| Nigeria | q90 | Any chronic condition | 20.20 | 3.21 | 6.30 | * |
+| Nigeria | q90 | Any member aged 65+ | 5.11 | 1.37 | 3.73 | * |
+| Nigeria | q90 | Any child | 2.49 | 1.62 | 1.54 |  |
+| Nigeria | q90 | Household size | -0.07 | 0.20 | -0.37 |  |
+| Nigeria | q95 | Below the poverty line | -8.17 | 3.11 | -2.63 | * |
+| Nigeria | q95 | 1-2x the poverty line | -2.28 | 3.33 | -0.68 |  |
+| Nigeria | q95 | Uninsured any part of the year | -8.93 | 13.99 | -0.64 |  |
+| Nigeria | q95 | Any chronic condition | 32.42 | 6.28 | 5.16 | * |
+| Nigeria | q95 | Any member aged 65+ | 6.34 | 2.42 | 2.62 | * |
+| Nigeria | q95 | Any child | 1.59 | 2.76 | 0.58 |  |
+| Nigeria | q95 | Household size | 0.11 | 0.33 | 0.34 |  |
+
 
 # Appendix tables
 
