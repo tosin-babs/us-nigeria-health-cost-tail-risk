@@ -9,6 +9,18 @@ Value-at-Risk, and generalised Pareto tail estimates — to household
 out-of-pocket burden in a high-income and a low-income health system on one
 harmonised basis, and asks where the two distributions meet.
 
+## Interactive comparison
+
+**https://us-nigeria-tail-risk.vercel.app**
+
+Put a household's out-of-pocket spending and resources in and see where that
+ratio lands on both countries' distributions at once, alongside the tail
+statistics for every group. It carries each group's quantile function, not the
+microdata.
+
+Build it with `python/export_tool_data.py` then `python/build_tool.py`. The
+export prints the reference values the page must reproduce.
+
 ## Status
 
 Complete draft. The pipeline runs end to end from the raw survey files in about

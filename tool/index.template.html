@@ -1,0 +1,531 @@
+<title>Two Tails</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Public+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+
+<style>
+/* ============================================================= tokens ====
+   A cool bone ground - not cream, not white - with exactly two saturated
+   colours, one per country, and nothing else competing with them. The whole
+   page is a comparison of two curves, so the palette is two curves.        */
+:root{
+  --ground:#EDEBE6; --plate:#FBFAF8; --plate-2:#F4F2ED;
+  --ink:#181A1B; --ink-2:#4E5457; --ink-3:#868D91;
+  --rule:#D8D5CD; --rule-2:#E6E3DC;
+  --us:#15556B; --us-soft:#DCE9ED; --us-line:#2E7D96;
+  --ng:#A8442A; --ng-soft:#F5E3DC; --ng-line:#C4593B;
+  --you:#6B4E9E;
+  --shadow:0 1px 2px rgba(24,26,27,.05), 0 14px 34px -20px rgba(24,26,27,.35);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#141513; --plate:#1D1F1E; --plate-2:#252827;
+    --ink:#EDEBE6; --ink-2:#B2B7B5; --ink-3:#7E8583;
+    --rule:#333735; --rule-2:#282B29;
+    --us:#68B6CF; --us-soft:#12303A; --us-line:#7FC6DC;
+    --ng:#E0855F; --ng-soft:#3A2018; --ng-line:#EC9A76;
+    --you:#B79BE8;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 16px 40px -22px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#141513; --plate:#1D1F1E; --plate-2:#252827;
+  --ink:#EDEBE6; --ink-2:#B2B7B5; --ink-3:#7E8583;
+  --rule:#333735; --rule-2:#282B29;
+  --us:#68B6CF; --us-soft:#12303A; --us-line:#7FC6DC;
+  --ng:#E0855F; --ng-soft:#3A2018; --ng-line:#EC9A76;
+  --you:#B79BE8;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 16px 40px -22px rgba(0,0,0,.9);
+}
+
+*{box-sizing:border-box}
+body{margin:0; background:var(--ground); color:var(--ink);
+  font-family:"Public Sans",-apple-system,Segoe UI,sans-serif; font-size:15px;
+  line-height:1.6; -webkit-font-smoothing:antialiased}
+.wrap{max-width:1000px; margin:0 auto; padding-inline:22px}
+.mono{font-family:"DM Mono",ui-monospace,Menlo,monospace;
+      font-variant-numeric:tabular-nums}
+h1,h2,h3{margin:0; font-family:Fraunces,Georgia,serif; text-wrap:balance}
+
+/* ============================================================== header === */
+header{padding-block:44px 30px}
+.eyebrow{font-size:11px; font-weight:700; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--ink-3); margin-bottom:14px}
+h1{font-size:clamp(32px,5.4vw,58px); font-weight:800; line-height:1.0;
+   letter-spacing:-.03em; max-width:20ch; text-wrap:pretty}
+h1 .us{color:var(--us)} h1 .ng{color:var(--ng)}
+.standfirst{margin:20px 0 0; max-width:62ch; font-size:17px; color:var(--ink-2)}
+
+/* ============================================================= headline == */
+.pair{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:26px}
+.side{background:var(--plate); border:1px solid var(--rule); border-radius:3px;
+      padding:18px 20px 20px; box-shadow:var(--shadow)}
+.side .flag{font-size:11px; font-weight:700; letter-spacing:.13em;
+  text-transform:uppercase; margin-bottom:12px}
+.side.a .flag{color:var(--us)} .side.b .flag{color:var(--ng)}
+.metric{display:flex; justify-content:space-between; align-items:baseline;
+        padding:7px 0; border-bottom:1px solid var(--rule-2); gap:12px}
+.metric:last-child{border-bottom:0}
+.metric .lab{font-size:12.5px; color:var(--ink-2)}
+.metric .val{font-family:"DM Mono",monospace; font-size:16px; font-weight:500;
+             font-variant-numeric:tabular-nums}
+.side.a .val{color:var(--us)} .side.b .val{color:var(--ng)}
+.metric.big .val{font-size:24px; font-weight:500}
+
+/* ================================================================ you ==== */
+.youbox{background:var(--plate); border:1px solid var(--rule); border-radius:3px;
+        box-shadow:var(--shadow); margin-top:26px; overflow:hidden}
+.youhead{padding:18px 22px 0}
+.youhead h2{font-size:23px; font-weight:600; letter-spacing:-.015em}
+.youhead p{margin:6px 0 0; color:var(--ink-2); font-size:14px; max-width:70ch}
+.inputs{display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+        gap:18px; padding:18px 22px 20px}
+.inp{display:flex; flex-direction:column}
+.inp label{display:block; font-size:11px; font-weight:700; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink-3); margin-bottom:6px;
+  min-height:2.6em}   /* two lines, so the fields line up when one wraps */
+.inp input{width:100%; font-family:"DM Mono",monospace; font-size:19px;
+  font-weight:500; padding:9px 11px; color:var(--ink); background:var(--plate-2);
+  border:1px solid var(--rule); border-radius:2px}
+.inp input:focus{outline:2px solid var(--you); outline-offset:1px;
+  border-color:var(--you)}
+.inp .note{font-size:11.5px; color:var(--ink-3); margin-top:5px}
+.result{background:var(--plate-2); border-top:1px solid var(--rule);
+        padding:18px 22px 20px}
+.rline{font-family:Fraunces,Georgia,serif; font-size:clamp(17px,2.2vw,22px);
+       line-height:1.5; margin:0}
+.rline b{font-weight:600}
+.rline .u{color:var(--us); font-family:"DM Mono",monospace; font-weight:500}
+.rline .n{color:var(--ng); font-family:"DM Mono",monospace; font-weight:500}
+.rline .y{color:var(--you); font-family:"DM Mono",monospace; font-weight:500}
+
+/* ============================================================== plates === */
+main{padding-block:8px 60px; display:grid; gap:24px}
+.plate{background:var(--plate); border:1px solid var(--rule); border-radius:3px;
+       box-shadow:var(--shadow); padding:22px 24px 24px}
+.plate h2{font-size:23px; font-weight:600; letter-spacing:-.015em}
+.plate .lede{margin:8px 0 0; color:var(--ink-2); font-size:14.5px; max-width:76ch}
+.chartbox{margin-top:20px; overflow-x:auto}
+svg{display:block; max-width:100%; height:auto}
+.grid{stroke:var(--rule-2); stroke-width:1}
+.axis{stroke:var(--rule); stroke-width:1}
+.tick{fill:var(--ink-3); font-family:"DM Mono",monospace; font-size:10px}
+.slab{fill:var(--ink-2); font-family:"Public Sans",sans-serif; font-size:11px}
+.key{display:flex; flex-wrap:wrap; gap:8px 22px; margin-top:14px; font-size:12.5px;
+     color:var(--ink-2)}
+.key i{display:inline-block; width:16px; height:3px; margin-right:7px;
+       vertical-align:3px}
+.pickrow{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px}
+.pick{font:500 12px/1 "Public Sans",sans-serif; padding:7px 11px; cursor:pointer;
+  background:transparent; color:var(--ink-2); border:1px solid var(--rule);
+  border-radius:99px; transition:.14s}
+.pick:hover{border-color:var(--ink-2); color:var(--ink)}
+.pick[aria-pressed="true"][data-c="us"]{background:var(--us); border-color:var(--us); color:var(--plate)}
+.pick[aria-pressed="true"][data-c="ng"]{background:var(--ng); border-color:var(--ng); color:var(--plate)}
+
+table{width:100%; border-collapse:collapse; margin-top:18px; font-size:13.5px}
+th,td{padding:9px 11px; text-align:right; border-bottom:1px solid var(--rule-2)}
+th:first-child,td:first-child{text-align:left}
+thead th{font-size:10.5px; text-transform:uppercase; letter-spacing:.09em;
+  color:var(--ink-3); font-weight:700; border-bottom:1.5px solid var(--rule)}
+tbody td{font-family:"DM Mono",monospace; font-variant-numeric:tabular-nums}
+tbody td:first-child{font-family:"Public Sans",sans-serif}
+tr.usrow td:first-child{color:var(--us); font-weight:600}
+tr.ngrow td:first-child{color:var(--ng); font-weight:600}
+
+details{margin-top:16px; border-top:1px solid var(--rule-2); padding-top:14px}
+summary{cursor:pointer; font-size:13px; font-weight:600; color:var(--ink-2);
+        list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+ "; color:var(--you); font-weight:800}
+details[open] summary::before{content:"– "}
+details p{font-size:13.5px; color:var(--ink-2); line-height:1.7; max-width:80ch}
+footer{border-top:1px solid var(--rule); padding-block:24px 46px; font-size:12.5px;
+  color:var(--ink-3); line-height:1.7}
+footer p{margin:0 0 9px; max-width:88ch} footer a{color:var(--us)}
+
+@media (max-width:720px){ .pair{grid-template-columns:1fr} }
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header class="wrap">
+  <p class="eyebrow">Out-of-pocket health spending &middot; United States and Nigeria</p>
+  <h1><span class="ng">Nigeria</span> is worse in the middle.<br>
+      <span class="us">America</span> is worse in the tail.</h1>
+  <p class="standfirst">Catastrophic health spending is usually compared between
+    countries with a single average. An average counts how many households cross
+    a line; it says nothing about how far past it the worst-affected go. Measure
+    the tail instead and the ordering reverses.</p>
+
+  <div class="pair">
+    <div class="side a">
+      <div class="flag">United States</div>
+      <div class="metric"><span class="lab">Spend over 10% of resources on health</span>
+        <span class="val" id="us-che"></span></div>
+      <div class="metric"><span class="lab">Burden at the 99th percentile</span>
+        <span class="val" id="us-q99"></span></div>
+      <div class="metric"><span class="lab">Worst-affected 5% pay, on average</span>
+        <span class="val" id="us-cvar"></span></div>
+      <div class="metric big"><span class="lab">Tail heaviness &xi;</span>
+        <span class="val" id="us-xi"></span></div>
+    </div>
+    <div class="side b">
+      <div class="flag">Nigeria</div>
+      <div class="metric"><span class="lab">Spend over 10% of resources on health</span>
+        <span class="val" id="ng-che"></span></div>
+      <div class="metric"><span class="lab">Burden at the 99th percentile</span>
+        <span class="val" id="ng-q99"></span></div>
+      <div class="metric"><span class="lab">Worst-affected 5% pay, on average</span>
+        <span class="val" id="ng-cvar"></span></div>
+      <div class="metric big"><span class="lab">Tail heaviness &xi;</span>
+        <span class="val" id="ng-xi"></span></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="youbox">
+    <div class="youhead">
+      <h2>Put yourself on both distributions</h2>
+      <p>Enter what a household spends out of pocket on health in a year and
+        what it has to spend overall. The same ratio is placed on the American
+        and the Nigerian distribution at once.</p>
+    </div>
+    <div class="inputs">
+      <div class="inp">
+        <label for="oop">Out-of-pocket health spending, a year</label>
+        <input id="oop" type="text" value="$2,500" inputmode="numeric">
+        <p class="note">Excluding insurance premiums, as in both surveys.</p>
+      </div>
+      <div class="inp">
+        <label for="res">Household income or consumption, a year</label>
+        <input id="res" type="text" value="$45,000" inputmode="numeric">
+        <p class="note">Income in the US comparison, consumption in the Nigerian.</p>
+      </div>
+      <div class="inp">
+        <label for="burden">Which is a burden of</label>
+        <input id="burden" type="text" readonly>
+        <p class="note">Out-of-pocket spending as a share of resources.</p>
+      </div>
+    </div>
+    <div class="result"><p class="rline" id="rline"></p></div>
+  </section>
+
+  <section class="plate">
+    <h2>The two distributions</h2>
+    <p class="lede">Burden at every percentile. The Nigerian curve sits above
+      the American one through the middle and is overtaken in the tail &mdash;
+      not because Nigeria improves, but because the American curve accelerates.
+      Pick any group to compare.</p>
+    <div class="chartbox"><svg id="curves" role="img"
+      aria-label="Burden by percentile, United States and Nigeria"></svg></div>
+    <div class="key">
+      <span><i style="background:var(--us-line)"></i><span id="k-us"></span></span>
+      <span><i style="background:var(--ng-line)"></i><span id="k-ng"></span></span>
+      <span><i style="background:var(--you);height:11px;width:11px;border-radius:50%"></i>You</span>
+    </div>
+    <div class="pickrow" id="pick-us"></div>
+    <div class="pickrow" id="pick-ng"></div>
+  </section>
+
+  <section class="plate">
+    <h2>How heavy is each tail?</h2>
+    <p class="lede">&xi; is the shape of a generalised Pareto distribution fitted
+      to the worst 10% of each group. Above zero the tail is heavy; above 0.5 the
+      variance is infinite, meaning the next bad case can be far worse than the
+      worst one seen. Every American group is above that line and no Nigerian
+      group is close.</p>
+    <div class="chartbox"><svg id="xichart" role="img"
+      aria-label="Generalised Pareto tail shape by group"></svg></div>
+    <table id="tailtable">
+      <thead><tr><th>Group</th><th>95th percentile</th>
+        <th>Worst 5% average</th><th>Worst 1% average</th><th>&xi;</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <section class="plate">
+    <h2>Why the shapes differ</h2>
+    <details open>
+      <summary>The mechanism, and what this page cannot tell you</summary>
+      <p>A Nigerian household facing a bill beyond its means does not pay it. It
+        forgoes the care, sells something, or borrows within a narrow local
+        limit. The observed burden is bounded by what could be raised, and the
+        real loss shows up as untreated illness, which no spending statistic
+        records. An American household in the same position is treated and then
+        billed, and the bill can be financed. The observed burden is bounded by
+        what can be borrowed, which is a far higher ceiling. The two
+        distributions differ in shape because the two systems fail differently,
+        and only one of those failures is visible in an out-of-pocket number.</p>
+      <p><b>The denominators are not the same variable.</b> The American survey
+        records income and no consumption; the Nigerian one records consumption
+        and unreliable income. Each country uses its own standard measure, which
+        is what WHO guidance allows, so this compares <i>relative burden</i> and
+        not welfare. Income is more volatile than consumption, which if anything
+        works against the finding rather than for it.</p>
+      <p><b>Neither survey sees forgone care.</b> A household that went without
+        treatment appears as a zero. Every figure here understates unmet need,
+        and it understates it far more in Nigeria.</p>
+      <p><b>This is not a personal risk assessment.</b> Placing your ratio on a
+        distribution tells you where that ratio sits among households surveyed in
+        2019&ndash;2024 and 2023/24. It is not a prediction about you.</p>
+    </details>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p><b>Data.</b> <span id="f-us"></span> and <span id="f-ng"></span>. Microdata
+    are not redistributed; this page carries only each group's quantile function.</p>
+  <p><b>Paper.</b> Babalola, O. D. (2026). <i>Financial Protection against
+    Health-Cost Shocks: A Harmonized US&ndash;Nigeria Comparison of Catastrophic
+    Spending, Underinsurance, and Out-of-Pocket Tail Risk.</i> Working paper.
+    Code and data:
+    <a href="https://github.com/tosin-babs/us-nigeria-health-cost-tail-risk">github.com/tosin-babs/us-nigeria-health-cost-tail-risk</a></p>
+  <p id="f-gen"></p>
+</footer>
+
+<script id="model-data" type="application/json">__MODEL_DATA__</script>
+<script>
+"use strict";
+const D = JSON.parse(document.getElementById("model-data").textContent);
+const usd = n => "$" + Math.round(n).toLocaleString("en-US");
+const pct = (x, d=1) => x.toFixed(d) + "%";
+const money = v => { const n = parseFloat(String(v).replace(/[^0-9.]/g, ""));
+                     return isFinite(n) ? n : 0; };
+
+const S = {us: "All families", ng: "Informal sector", oop: 2500, res: 45000};
+
+/* Percentile of a burden value within a group's quantile function. */
+function percentileOf(curve, value){
+  const q = curve.q;
+  if (value <= q[0]) return 1;
+  if (value >= q[q.length - 1]) return 99;
+  for (let i = 1; i < q.length; i++){
+    if (value <= q[i]){
+      const span = q[i] - q[i - 1];
+      const frac = span > 0 ? (value - q[i - 1]) / span : 0;
+      return D.grid[i - 1] + frac;
+    }
+  }
+  return 99;
+}
+
+const NS = "http://www.w3.org/2000/svg";
+const el = (t, a, txt) => { const e = document.createElementNS(NS, t);
+  for (const k in a) e.setAttribute(k, a[k]); if (txt != null) e.textContent = txt;
+  return e; };
+const clear = n => { while (n.firstChild) n.removeChild(n.firstChild); };
+
+/* ------------------------------------------------------------- curves */
+function drawCurves(){
+  const svg = document.getElementById("curves");
+  clear(svg);
+  const W = 940, H = 400, ml = 58, mr = 26, mt = 18, mb = 50;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  svg.setAttribute("width", W); svg.setAttribute("height", H);
+  const iw = W - ml - mr, ih = H - mt - mb;
+
+  const cu = D.us[S.us], cn = D.ng[S.ng];
+  const burden = S.res > 0 ? 100 * S.oop / S.res : 0;
+  const peak = Math.max(cu.q[93], cn.q[93], Math.min(burden * 1.3, 200)) * 1.12;
+  const x = p => ml + ((p - 1) / 98) * iw;
+  const y = v => mt + ih - (Math.min(v, peak) / peak) * ih;
+
+  for (let p = 10; p <= 100; p += 10){
+    svg.appendChild(el("line", {x1:x(p), x2:x(p), y1:mt, y2:mt+ih, class:"grid"}));
+    svg.appendChild(el("text", {x:x(p), y:H-mb+17, class:"tick",
+      "text-anchor":"middle"}, p + (p === 100 ? "" : "")));
+  }
+  const step = peak > 80 ? 20 : peak > 40 ? 10 : 5;
+  for (let v = 0; v <= peak; v += step){
+    svg.appendChild(el("line", {x1:ml, x2:W-mr, y1:y(v), y2:y(v), class:"grid"}));
+    svg.appendChild(el("text", {x:ml-9, y:y(v)+3.5, class:"tick",
+      "text-anchor":"end"}, v + "%"));
+  }
+  svg.appendChild(el("line", {x1:ml, x2:ml, y1:mt, y2:mt+ih, class:"axis"}));
+  svg.appendChild(el("line", {x1:ml, x2:W-mr, y1:mt+ih, y2:mt+ih, class:"axis"}));
+
+  for (const [curve, colour] of [[cu, "var(--us-line)"], [cn, "var(--ng-line)"]]){
+    let d = "";
+    curve.q.forEach((v, i) => {
+      d += (i ? "L" : "M") + x(D.grid[i]).toFixed(1) + " " + y(v).toFixed(1);
+    });
+    svg.appendChild(el("path", {d, fill:"none", stroke:colour,
+      "stroke-width":2.8, "stroke-linejoin":"round"}));
+  }
+
+  if (burden > 0){
+    svg.appendChild(el("line", {x1:ml, x2:W-mr, y1:y(burden), y2:y(burden),
+      stroke:"var(--you)", "stroke-width":1.4, "stroke-dasharray":"5 4"}));
+    for (const [curve, colour] of [[cu, "var(--us-line)"], [cn, "var(--ng-line)"]]){
+      const p = percentileOf(curve, burden);
+      svg.appendChild(el("circle", {cx:x(p), cy:y(burden), r:6,
+        fill:"var(--you)", stroke:colour, "stroke-width":2.5}));
+    }
+    svg.appendChild(el("text", {x:ml+5, y:y(burden)-8, class:"slab",
+      fill:"var(--you)", "font-weight":"700"},
+      `your burden, ${pct(burden)}`));
+  }
+  svg.appendChild(el("text", {x:ml+iw/2, y:H-6, class:"slab",
+    "text-anchor":"middle"},
+    "Percentile of each group's own burden distribution"));
+}
+
+/* ---------------------------------------------------------------- xi */
+function drawXi(){
+  const svg = document.getElementById("xichart");
+  clear(svg);
+  const rows = [];
+  for (const [country, key, colour] of [["United States", "us", "var(--us-line)"],
+                                        ["Nigeria", "ng", "var(--ng-line)"]]){
+    for (const g of Object.keys(D[key])){
+      const t = D.tail[country] && D.tail[country][g];
+      if (t) rows.push({g, country, colour, ...t});
+    }
+  }
+  rows.sort((a, b) => a.xi - b.xi);
+
+  const W = 940, rowH = 25, ml = 168, mr = 46, mt = 26, mb = 34;
+  const H = mt + mb + rows.length * rowH;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  svg.setAttribute("width", W); svg.setAttribute("height", H);
+  const iw = W - ml - mr;
+  const lo = Math.min(-0.45, ...rows.map(r => r.xi_lo ?? r.xi));
+  const hi = Math.max(0.95, ...rows.map(r => r.xi_hi ?? r.xi));
+  const x = v => ml + ((v - lo) / (hi - lo)) * iw;
+
+  for (let v = Math.ceil(lo * 4) / 4; v <= hi; v += 0.25){
+    svg.appendChild(el("line", {x1:x(v), x2:x(v), y1:mt-6,
+      y2:mt + rows.length*rowH, class:"grid"}));
+    svg.appendChild(el("text", {x:x(v), y:mt-12, class:"tick",
+      "text-anchor":"middle"}, v.toFixed(2)));
+  }
+  svg.appendChild(el("line", {x1:x(0), x2:x(0), y1:mt-6,
+    y2:mt+rows.length*rowH, class:"axis"}));
+  svg.appendChild(el("line", {x1:x(0.5), x2:x(0.5), y1:mt-6,
+    y2:mt+rows.length*rowH, stroke:"var(--ink-3)", "stroke-width":1.2,
+    "stroke-dasharray":"4 3"}));
+  svg.appendChild(el("text", {x:x(0.5)+5, y:mt+rows.length*rowH+14,
+    class:"slab", fill:"var(--ink-3)"}, "ξ = 0.5, infinite variance"));
+
+  rows.forEach((r, i) => {
+    const cy = mt + i*rowH + rowH/2;
+    if (r.xi_lo != null && r.xi_hi != null){
+      svg.appendChild(el("line", {x1:x(r.xi_lo), x2:x(r.xi_hi), y1:cy, y2:cy,
+        stroke:r.colour, "stroke-width":2, "stroke-opacity":.42}));
+      for (const v of [r.xi_lo, r.xi_hi])
+        svg.appendChild(el("line", {x1:x(v), x2:x(v), y1:cy-4, y2:cy+4,
+          stroke:r.colour, "stroke-width":2, "stroke-opacity":.42}));
+    }
+    svg.appendChild(el("circle", {cx:x(r.xi), cy, r:5.5, fill:r.colour}));
+    svg.appendChild(el("text", {x:ml-11, y:cy+3.8, class:"slab",
+      "text-anchor":"end", fill:r.colour, "font-weight":"600"}, r.g));
+    svg.appendChild(el("text", {x:x(r.xi)+10, y:cy+3.8, class:"tick",
+      fill:r.colour}, (r.xi >= 0 ? "+" : "") + r.xi.toFixed(3)));
+  });
+}
+
+/* -------------------------------------------------------------- render */
+function render(){
+  const burden = S.res > 0 ? 100 * S.oop / S.res : 0;
+  document.getElementById("burden").value = pct(burden, 2);
+
+  const cu = D.us[S.us], cn = D.ng[S.ng];
+  const pu = percentileOf(cu, burden), pn = percentileOf(cn, burden);
+  const ord = n => { const s = ["th","st","nd","rd"], v = n % 100;
+                     return n + (s[(v - 20) % 10] || s[v] || s[0]); };
+
+  document.getElementById("rline").innerHTML =
+    `A burden of <span class="y">${pct(burden, 1)}</span> puts this household at `
+    + `the <span class="u">${ord(Math.round(pu))} percentile</span> of `
+    + `<b>${S.us.toLowerCase()}</b> in the United States and the `
+    + `<span class="n">${ord(Math.round(pn))} percentile</span> of `
+    + `<b>${S.ng.toLowerCase()}</b> in Nigeria. `
+    + (pu > pn
+       ? `It is a rarer burden in America than in Nigeria &mdash; which is what
+          the averages predict, and stops being true higher up.`
+       : `It is a <b>rarer</b> burden in Nigeria than in America, even though
+          Nigeria's average is far worse. That is the tail doing the work.`);
+
+  document.getElementById("k-us").textContent = "United States — " + S.us;
+  document.getElementById("k-ng").textContent = "Nigeria — " + S.ng;
+
+  drawCurves();
+  drawXi();
+
+  const tb = document.querySelector("#tailtable tbody");
+  const rows = [];
+  for (const [country, key, cls] of [["United States", "us", "usrow"],
+                                     ["Nigeria", "ng", "ngrow"]]){
+    for (const g of Object.keys(D[key])){
+      const t = D.tail[country] && D.tail[country][g];
+      if (!t) continue;
+      const sel = (key === "us" && g === S.us) || (key === "ng" && g === S.ng);
+      rows.push(`<tr class="${cls}"><td>${g}${sel ? " ●" : ""}</td>`
+        + `<td>${pct(t.var95, 1)}</td><td>${pct(t.cvar95, 1)}</td>`
+        + `<td>${pct(t.cvar99, 1)}</td>`
+        + `<td>${(t.xi >= 0 ? "+" : "") + t.xi.toFixed(3)}</td></tr>`);
+    }
+  }
+  tb.innerHTML = rows.join("");
+}
+
+/* ----------------------------------------------------------------- boot */
+function buildPicks(id, key, country){
+  const box = document.getElementById(id);
+  box.innerHTML = "";
+  for (const g of Object.keys(D[key])){
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "pick"; b.textContent = g;
+    b.dataset.c = key;
+    b.setAttribute("aria-pressed", String(S[key] === g));
+    b.addEventListener("click", () => {
+      S[key] = g;
+      box.querySelectorAll(".pick").forEach(x =>
+        x.setAttribute("aria-pressed", String(x.textContent === g)));
+      render();
+    });
+    box.appendChild(b);
+  }
+}
+buildPicks("pick-us", "us", "United States");
+buildPicks("pick-ng", "ng", "Nigeria");
+
+for (const [id, field] of [["oop", "oop"], ["res", "res"]]){
+  const e = document.getElementById(id);
+  e.addEventListener("input", () => {
+    const v = money(e.value);
+    if (v > 0){ S[field] = v; render(); }
+  });
+  e.addEventListener("blur", () => { e.value = usd(S[field]); render(); });
+}
+
+const h = D.headline;
+document.getElementById("us-che").textContent =
+  pct(h["United States"]["Budget share > 10%"], 1);
+document.getElementById("ng-che").textContent =
+  pct(h["Nigeria"]["Budget share > 10%"], 1);
+document.getElementById("us-q99").textContent =
+  pct(D.us["All families"].q[98], 1);
+document.getElementById("ng-q99").textContent =
+  pct(D.ng["All households"].q[98], 1);
+document.getElementById("us-cvar").textContent =
+  pct(D.tail["United States"]["All families"].cvar95, 1);
+document.getElementById("ng-cvar").textContent =
+  pct(D.tail["Nigeria"]["All households"].cvar95, 1);
+document.getElementById("us-xi").textContent =
+  "+" + D.tail["United States"]["All families"].xi.toFixed(3);
+document.getElementById("ng-xi").textContent =
+  "+" + D.tail["Nigeria"]["All households"].xi.toFixed(3);
+
+document.getElementById("f-us").textContent = D.meta.us_source;
+document.getElementById("f-ng").textContent = D.meta.ng_source;
+document.getElementById("f-gen").textContent =
+  `${D.meta.us_n.toLocaleString()} US family-years and `
+  + `${D.meta.ng_n.toLocaleString()} Nigerian households. Payload generated `
+  + `${D.meta.generated}. Everything is computed in your browser; nothing you `
+  + `type is sent anywhere.`;
+
+render();
+</script>
