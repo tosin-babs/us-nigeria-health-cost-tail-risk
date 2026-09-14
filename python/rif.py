@@ -20,7 +20,10 @@ Silverman bandwidth, both weighted.
 
 Standard errors are clustered on the primary sampling unit, which is the
 design feature that matters most here; the strata contribute a finite-
-population correction we conservatively ignore.
+population correction we conservatively ignore. The density in the RIF is
+held fixed at its full-sample estimate, so the standard errors do not carry
+the sampling variability of the density; that is the usual practice and the
+usual caveat.
 
 The cluster is the stratum-PSU *pair*, not the PSU label. MEPS numbers PSUs
 within strata, so eight labels are reused across 117 strata; clustering on the
@@ -133,6 +136,22 @@ def run_country(df, spec, label, weight_col="weight", psu_col="psu",
     return pd.DataFrame(rows)
 
 
+def ng_spec(ng, basis="net"):
+    """Nigerian covariates, with poverty on gross or net-of-OOP consumption."""
+    res = ng["resources_net"] if basis == "net" else ng["resources"]
+    pc = res / ng["n_persons"].clip(lower=1)
+    line = ng["poverty_threshold"] / ng["n_persons"].clip(lower=1)
+    return {
+        "Below the poverty line": (pc < line).astype(float),
+        "1-2x the poverty line": ((pc >= line) & (pc < 2 * line)).astype(float),
+        "Uninsured any part of the year": (ng["insured"] == 0).astype(float),
+        "Any chronic condition": ng["any_chronic"].astype(float),
+        f"Any member aged {config.ELDERLY_AGE}+": (ng["n_over60"] > 0).astype(float),
+        f"Any child under {config.CHILD_AGE}": (ng["n_under5"] > 0).astype(float),
+        "Household size": ng["n_persons"].astype(float),
+    }
+
+
 def main():
     us = pd.read_csv(config.DERIVED / "us_family.csv")
     ng = pd.read_csv(config.DERIVED / "ng_household.csv")
@@ -143,34 +162,29 @@ def main():
 
     ng = ng[np.isfinite(ng["burden"])].copy()
 
-    # Covariates are matched in meaning across the two countries as far as the
-    # surveys allow. Income position is expressed relative to each country's
-    # own poverty line so that the coefficient means the same thing in both.
+    # Covariates are matched in meaning across the two countries. Income
+    # position is relative to each country's own poverty line. Age cut-offs
+    # are those the Nigerian file carries (60+, under 5), applied to MEPS too.
+    #
+    # Nigeria's poverty position is measured on consumption NET of
+    # out-of-pocket spending. Gross consumption contains the outcome, so a
+    # household that spent heavily on health is mechanically ranked richer;
+    # the sign of the poverty coefficient on the gross ranking is an artifact
+    # of that (it flips), which is shown in the robustness grid.
     us_spec = {
         "Below the poverty line": (us["povlev"] < 100).astype(float),
         "1-2x the poverty line": us["povlev"].between(100, 200).astype(float),
         "Uninsured any part of the year": (us["insurance_group"]
                                            != "Insured all year").astype(float),
         "Any chronic condition": us["any_chronic"].astype(float),
-        "Any member aged 65+": (us["n_over64"] > 0).astype(float),
-        "Any child": (us["n_under18"] > 0).astype(float),
+        f"Any member aged {config.ELDERLY_AGE}+":
+            (us["n_elderly_h"] > 0).astype(float),
+        f"Any child under {config.CHILD_AGE}": (us["n_child_h"] > 0).astype(float),
         "Household size": us["n_persons"].astype(float),
     }
-    ng_res_pc = ng["resources"] / ng["n_persons"].clip(lower=1)
-    ng_line = ng["poverty_threshold"] / ng["n_persons"].clip(lower=1)
-    ng_spec = {
-        "Below the poverty line": (ng_res_pc < ng_line).astype(float),
-        "1-2x the poverty line": ((ng_res_pc >= ng_line)
-                                  & (ng_res_pc < 2 * ng_line)).astype(float),
-        "Uninsured any part of the year": (ng["insured"] == 0).astype(float),
-        "Any chronic condition": ng["any_chronic"].astype(float),
-        "Any member aged 65+": (ng["n_over60"] > 0).astype(float),
-        "Any child": (ng["n_under5"] > 0).astype(float),
-        "Household size": ng["n_persons"].astype(float),
-    }
-
     out = pd.concat([run_country(us, us_spec, "United States"),
-                     run_country(ng, ng_spec, "Nigeria")], ignore_index=True)
+                     run_country(ng, ng_spec(ng, "net"), "Nigeria")],
+                    ignore_index=True)
     out.to_csv(config.TABLES / "table7_rif.csv", index=False)
 
     print("\n=== Unconditional quantile regression of burden (pp per unit) ===")

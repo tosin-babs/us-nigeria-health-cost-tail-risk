@@ -19,8 +19,20 @@
     "VAR_LEVELS": "(0.9, 0.95, 0.99)",
     "CVAR_LEVELS": "(0.9, 0.95, 0.99)",
     "GPD_THRESHOLD_QUANTILE": 0.9,
-    "GPD_THRESHOLD_GRID": "(0.85, 0.9, 0.95)",
-    "N_BOOTSTRAP": 1000,
+    "GPD_THRESHOLD_GRID": "(0.8, 0.85, 0.9, 0.95, 0.975)",
+    "BOOTSTRAP_METHOD": "rao_wu",
+    "N_BOOTSTRAP": 400,
+    "GPD_QQ_POINTS": 200,
+    "DENOMINATOR_POVERTY_FLOOR": 1.0,
+    "LINK_ADJACENT_YEAR_INCOME": true,
+    "ELDERLY_AGE": 60,
+    "CHILD_AGE": 5,
+    "MEPS_COST_BARRIER_VARS": "('DLAYCA42', 'AFRDCA42', 'DLAYPM42', 'AFRDPM42')",
+    "MEPS_MEDICAL_DEBT_VAR": "MEDDEBT42",
+    "BURDEN_BANDS": "(0.0, 0.1, 0.4, 1.0, inf)",
+    "CENSUS_THRESHOLDS_2024": "{1: 16320, 2: 21006, 3: 25249, 4: 31812}",
+    "CENSUS_WEIGHTED_AVERAGE_2024": "{1: 15940, 2: 20220, 3: 24950, 4: 32130}",
+    "HHS_GUIDELINES_2024": "{1: 15060, 2: 20440, 3: 25820, 4: 31200}",
     "PARITY_REFERENCE_QUANTILES": "(0.5, 0.75)",
     "NGN_PRICE_BASE": "August 2023",
     "PPP_NGN_PER_INTL_USD": null,
@@ -38,27 +50,37 @@
     {
       "step": "Build the US family file from MEPS",
       "module": "build_meps",
-      "seconds": 6.3
+      "seconds": 9.3
     },
     {
       "step": "Put Nigeria on the harmonised basis",
       "module": "build_nigeria",
-      "seconds": 1.7
+      "seconds": 4.6
     },
     {
       "step": "Harmonised catastrophic spending",
       "module": "burden",
-      "seconds": 0.9
+      "seconds": 0.7
     },
     {
       "step": "Tail risk: VaR, CVaR and GPD fits",
       "module": "tailrisk",
-      "seconds": 16.6
+      "seconds": 20.7
+    },
+    {
+      "step": "Denominator tests and GPD diagnostics",
+      "module": "denominator",
+      "seconds": 39.6
+    },
+    {
+      "step": "Forgone care and medical debt",
+      "module": "censoring",
+      "seconds": 0.2
     },
     {
       "step": "Parity and crossover",
       "module": "parity",
-      "seconds": 2.1
+      "seconds": 2.4
     },
     {
       "step": "Drivers of the upper tail",
@@ -68,17 +90,32 @@
     {
       "step": "Absolute comparison in PPP dollars",
       "module": "absolute",
-      "seconds": 0.1
+      "seconds": 0.2
     },
     {
       "step": "Robustness grid",
       "module": "robustness",
-      "seconds": 0.5
+      "seconds": 1.5
     },
     {
       "step": "Figures",
       "module": "exhibits",
-      "seconds": 1.0
+      "seconds": 1.2
+    },
+    {
+      "step": "Tool payload",
+      "module": "export_tool_data",
+      "seconds": 1.3
+    },
+    {
+      "step": "Tool page",
+      "module": "build_tool",
+      "seconds": 0.0
+    },
+    {
+      "step": "Render the tables",
+      "module": "make_tables",
+      "seconds": 0.0
     },
     {
       "step": "Manuscript number check",
@@ -88,7 +125,7 @@
     {
       "step": "Submission documents",
       "module": "make_manuscript",
-      "seconds": 1.8
+      "seconds": 2.2
     }
   ]
 }

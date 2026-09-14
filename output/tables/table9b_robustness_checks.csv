@@ -1,12 +1,17 @@
-variant,Nigeria worse on CHE10,US tail heavier (xi)
-Baseline,True,True
-Excluding 2020 (pandemic),True,True
-US 2024 only,True,True
-US 2019 only,True,True
-Income floor $500,True,True
-"Income floor $2,000",True,True
-"Income floor $5,000",True,True
-Nigeria: food-share floor,True,True
-Per equivalent adult,True,True
-GPD threshold q85,True,True
-GPD threshold q95,True,True
+variant,Nigeria worse on CHE10,US tail heavier (xi),US CVaR95 higher
+Baseline,True,True,True
+Excluding 2020 (pandemic),True,True,True
+US 2024 only,True,True,True
+US 2019 only,True,True,True
+Income floor $500,True,True,True
+"Income floor $2,000",True,True,False
+"Income floor $5,000",True,True,False
+US income at or above the poverty line,True,True,False
+Nigeria: food-share floor,True,True,True
+Per equivalent adult,True,True,True
+GPD threshold q85,True,True,True
+GPD threshold q95,True,True,True
+Nigeria: OOP including transport,True,True,True
+Nigeria: consumption-module OOP,False,True,True
+Matched net denominators,True,True,False
+Matched gross denominators,True,True,False

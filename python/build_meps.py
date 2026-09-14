@@ -38,6 +38,8 @@ PERSON_VARS = [
     "TTLP{yy}X",    # person total income
     "AGE{yy}X", "SEX", "RACETHX", "REGION{yy}",
     "FAMSZE{yy}",
+    # Access and credit items carry no year suffix. Medical debt is 2024 only.
+    *config.MEPS_COST_BARRIER_VARS, config.MEPS_MEDICAL_DEBT_VAR,
 ]
 
 # Priority-condition flags, used for the chronic indicator. MEPS renamed these
@@ -140,6 +142,36 @@ def to_families(d: pd.DataFrame) -> pd.DataFrame:
     d["fam_id"] = (d["year"].astype(str) + "_" + d["DUID"].astype(str)
                    + "_" + d["FAMIDYR"].astype(str))
 
+    # Two-year income. MEPS panels overlap across annual files and DUPERSID is
+    # stable within a panel, so the same person's family income in the
+    # adjacent year is on disk. The following year is preferred and the
+    # previous year used when it is absent (2024 has no following file).
+    d["faminc_other"] = np.nan
+    if config.LINK_ADJACENT_YEAR_INCOME:
+        d["DUPERSID"] = d["DUPERSID"].astype(str)
+        key = d[["DUPERSID", "year", "faminc"]]
+        nxt = key.assign(year=key["year"] - 1).rename(columns={"faminc": "_next"})
+        prv = key.assign(year=key["year"] + 1).rename(columns={"faminc": "_prev"})
+        d = (d.merge(nxt, on=["DUPERSID", "year"], how="left")
+              .merge(prv, on=["DUPERSID", "year"], how="left"))
+        d["faminc_other"] = d["_next"].fillna(d["_prev"])
+        linked = d["faminc_other"].notna().mean()
+        print(f"  persons linked to an adjacent year's family income: "
+              f"{100 * linked:.1f}%")
+
+    # Cost barriers: any of the four delay / could-not-afford items answered yes.
+    items = []
+    for v in config.MEPS_COST_BARRIER_VARS:
+        if v in d.columns:
+            d[f"_{v}"] = np.where(d[v] == 1, 1.0, np.where(d[v] == 2, 0.0, np.nan))
+            items.append(f"_{v}")
+    d["cost_barrier"] = d[items].max(axis=1) if items else np.nan
+    mv = config.MEPS_MEDICAL_DEBT_VAR
+    if mv in d.columns:
+        d["med_debt"] = np.where(d[mv] > 0, 1.0, np.where(d[mv] == 0, 0.0, np.nan))
+    else:
+        d["med_debt"] = np.nan
+
     agg = d.groupby("fam_id").agg(
         year=("year", "first"),
         oop=("oop", "sum"),
@@ -154,6 +186,11 @@ def to_families(d: pd.DataFrame) -> pd.DataFrame:
         age_mean=("age", "mean"),
         n_over64=("age", lambda s: int((s >= 65).sum())),
         n_under18=("age", lambda s: int((s < 18).sum())),
+        n_elderly_h=("age", lambda s: int((s >= config.ELDERLY_AGE).sum())),
+        n_child_h=("age", lambda s: int(((s >= 0) & (s < config.CHILD_AGE)).sum())),
+        faminc_other=("faminc_other", "median"),
+        cost_barrier=("cost_barrier", "max"),
+        med_debt=("med_debt", "max"),
         faminc=("faminc", "first"),
         povlev=("povlev", "first"),
         povcat=("povcat", "first"),
@@ -199,6 +236,11 @@ def to_families(d: pd.DataFrame) -> pd.DataFrame:
     ctp = (agg["faminc"] - pov_threshold)
     agg["ctp"] = np.where(ctp > 0, ctp, np.nan)
     agg["burden_ctp"] = agg["oop"] / agg["ctp"]
+
+    # Two-year average family income where the adjacent year is observed.
+    agg["faminc_2yr"] = np.where(agg["faminc_other"].notna(),
+                                 0.5 * (agg["faminc"] + agg["faminc_other"]),
+                                 np.nan)
 
     agg["eqsize"] = agg["n_persons"] ** config.EQ_SCALE_POWER
     agg["popwt"] = agg["weight"] * agg["n_persons"]

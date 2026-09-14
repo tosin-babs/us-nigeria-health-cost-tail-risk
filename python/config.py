@@ -114,8 +114,65 @@ CVAR_LEVELS = (0.90, 0.95, 0.99)
 # grid is reported, because GPD shape estimates are notoriously
 # threshold-sensitive.
 GPD_THRESHOLD_QUANTILE = 0.90
-GPD_THRESHOLD_GRID = (0.85, 0.90, 0.95)
-N_BOOTSTRAP = 1_000                  # cluster bootstrap for tail statistics
+GPD_THRESHOLD_GRID = (0.80, 0.85, 0.90, 0.95, 0.975)
+# Design bootstrap for every tail statistic. "rao_wu" draws n_h - 1 PSUs with
+# replacement in each stratum and rescales the weights by n_h / (n_h - 1)
+# (Rao and Wu 1988), which is unbiased for the linearised variance even with
+# two PSUs per stratum; "naive" draws n_h and understates the variance by the
+# factor (n_h - 1) / n_h. MEPS has 35 strata with two PSUs.
+BOOTSTRAP_METHOD = "rao_wu"
+N_BOOTSTRAP = 400                    # replicates for every tail interval
+GPD_QQ_POINTS = 200                  # probability points in the QQ diagnostic
+
+# ------------------------------------------------ denominator construction ----
+# The tail index of a ratio depends on how its denominator is built, so the
+# US-Nigeria comparison of tail shape is repeated on matched constructions.
+#
+# Nigeria's SDG-style consumption aggregate CONTAINS the out-of-pocket spending
+# it is divided into (Paper 2, build_data.py), so OOP / consumption < 1 by
+# construction and its tail is bounded. US family income does not contain OOP,
+# so OOP / income is unbounded. Two matched pairs follow:
+#   "net"   OOP over resources excluding health spending:
+#           US OOP / income  against  Nigeria OOP / (consumption - OOP)
+#   "gross" OOP over resources including health spending:
+#           US OOP / (income + OOP)  against  Nigeria OOP / consumption
+# Neither pair is exact (income is not consumption), so a conclusion is
+# treated as established only if it holds under both.
+#
+# Low transitory income can make a ratio heavy-tailed mechanically. Two checks:
+# floor the denominator at a multiple of the poverty threshold in both
+# countries, and (US only) replace one-year income by the two-year average
+# for the same persons, using the overlap of MEPS panels across annual files.
+DENOMINATOR_POVERTY_FLOOR = 1.0      # floor = this multiple of the poverty line
+LINK_ADJACENT_YEAR_INCOME = True     # build the two-year income measure
+
+# Harmonized household composition. The Nigerian file carries members aged
+# 60+ and children under 5, so the US covariates use the same cut-offs.
+ELDERLY_AGE = 60
+CHILD_AGE = 5
+
+# ------------------------------------------------------ access and credit ----
+# MEPS round 4/2 items: delayed or could not afford medical care or
+# prescription medicines because of cost (1 = yes, 2 = no, negatives missing).
+MEPS_COST_BARRIER_VARS = ("DLAYCA42", "AFRDCA42", "DLAYPM42", "AFRDPM42")
+# Amount of medical debt (0 = none, 1-7 amount bands). Fielded in 2024 only.
+MEPS_MEDICAL_DEBT_VAR = "MEDDEBT42"
+# Burden bands for the access and debt tabulation.
+BURDEN_BANDS = (0.0, 0.10, 0.40, 1.00, float("inf"))
+# GHS-Panel wave 5, post-planting health section (individual level). Needed
+# for the reason a sick member consulted no one. Extract it from the World
+# Bank CSV release (catalog 6410) into data/raw/ghs_w5/.
+NG_HEALTH_SECTION = RAW / "ghs_w5" / "sect3_plantingw5.csv"
+
+# Official poverty thresholds used by MEPS POVLEV are the Census Bureau's, not
+# the HHS guidelines. 2024 weighted average thresholds, families of 1-4:
+# https://www2.census.gov/programs-surveys/cps/tables/time-series/historical-poverty-thresholds/thresh24.xlsx
+# The cell used is the modal family type for each size: one person under 65;
+# two people, householder under 65, no children; three people with one child;
+# four people with two children. The weighted averages are shown alongside.
+CENSUS_THRESHOLDS_2024 = {1: 16_320, 2: 21_006, 3: 25_249, 4: 31_812}
+CENSUS_WEIGHTED_AVERAGE_2024 = {1: 15_940, 2: 20_220, 3: 24_950, 4: 32_130}
+HHS_GUIDELINES_2024 = {1: 15_060, 2: 20_440, 3: 25_820, 4: 31_200}
 
 # Parity: the percentile at which a US subgroup's burden reaches a Nigerian
 # reference burden. Reported against the Nigerian informal median and upper

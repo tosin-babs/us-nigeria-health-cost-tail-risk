@@ -22,6 +22,7 @@ import numpy as np
 import pandas as pd
 
 import config
+from svy import weighted_quantile
 
 # Paper 2's poverty line, carried forward to its own price base.
 # NBS, Poverty and Inequality in Nigeria 2019: N137,430 per person per year in
@@ -71,6 +72,13 @@ def main():
         "n_under5": hh.get("n_under5", 0),
         "subsistence_food": hh["subsistence"],
         "ctp_food": hh["ctp"],
+        # Components of the consumption aggregate, so that alternative OOP
+        # measures can be carried into the denominator consistently.
+        "nonfood_excl_health": hh["nonfood_excl_health"],
+        "nonfood_all": hh["nonfood_annual"],
+        "edu": hh["edu_annual"],
+        "oop_with_transport": hh["oop_with_transport"],
+        "oop_consumption_module": hh["oop_consumption_module"],
     })
 
     # ---- harmonised floor: the national poverty line, per person -----------
@@ -80,6 +88,19 @@ def main():
 
     d["burden"] = d["oop"] / d["resources"].where(d["resources"] > 0)
     d["burden_ctp"] = d["oop"] / d["ctp_poverty"]
+
+    # The consumption aggregate includes health-module OOP, so the budget share
+    # above is below one by construction. Consumption net of OOP is the
+    # resource measure that, like US income, does not contain the numerator.
+    d["resources_net"] = d["resources"] - d["oop"]
+    d["burden_net"] = d["oop"] / d["resources_net"].where(d["resources_net"] > 0)
+    # Quintiles of per-capita consumption net of OOP, person-weighted. Ranking
+    # on gross consumption would move a household up the distribution because
+    # it spent on health.
+    pc_net = d["resources_net"] / d["n_persons"].clip(lower=1)
+    cuts = weighted_quantile(pc_net, d["weight"] * d["n_persons"],
+                             [0.2, 0.4, 0.6, 0.8])
+    d["quintile_net"] = np.searchsorted(cuts, pc_net, side="right") + 1
     d["burden_ctp_food"] = d["oop"] / d["ctp_food"].where(d["ctp_food"] > 0)
 
     d["eqsize"] = d["n_persons"] ** config.EQ_SCALE_POWER
@@ -119,6 +140,49 @@ def main():
     out = config.DERIVED / "ng_household.csv"
     d.to_csv(out, index=False)
     print(f"\nwrote {out.relative_to(config.ROOT)}  ({len(d):,} rows)")
+
+    care = care_seeking(d)
+    if care is not None:
+        path = config.DERIVED / "ng_care.csv"
+        care.to_csv(path, index=False)
+        print(f"wrote {path.relative_to(config.ROOT)}  ({len(care):,} persons)")
+
+
+def _code(series):
+    s = series.astype("string").str.strip()
+    # Plain float64, so that comparisons give ordinary booleans (NaN -> False).
+    return pd.to_numeric(s.str.extract(r"^(-?\d+)\.", expand=False),
+                         errors="coerce").astype("float64")
+
+
+def care_seeking(hh):
+    """Illness, consultation and the stated reason for not consulting.
+
+    Post-planting Section 3. A member is counted as ill when he or she reports
+    an illness or injury in the last four weeks (s3q5) or consulted for one
+    (s3q4_1 codes 1-2), the definition used for the companion paper's
+    utilization models. s3q9_1 = 1 is "consulted no one"; s3q9a asks those
+    members why, and item 3 is "too expensive / lack of money".
+    """
+    path = config.NG_HEALTH_SECTION
+    if not path.exists():
+        print(f"  {path.relative_to(config.ROOT)} not found; the care-seeking "
+              "table will be skipped (see README)")
+        return None
+    h = pd.read_csv(path, low_memory=False)
+    ill = (_code(h["s3q5"]) == 1) | _code(h["s3q4_1"]).isin([1, 2])
+    nobody = _code(h["s3q9_1"]) == 1
+    care = pd.DataFrame({
+        "hhid": h["hhid"],
+        "ill": ill.astype(int),
+        "consulted_no_one": (ill & nobody).astype(int),
+        "no_consult_cost": (ill & nobody & (_code(h["s3q9a__3"]) == 1)).astype(int),
+        "no_consult_minor": (ill & nobody & (_code(h["s3q9a__1"]) == 1)).astype(int),
+    })
+    keep = ["hhid", "weight", "stratum", "psu", "quintile_net", "oop",
+            "resources_net", "n_persons"]
+    care = care.merge(hh[keep], on="hhid", how="inner")
+    return care
 
 
 if __name__ == "__main__":

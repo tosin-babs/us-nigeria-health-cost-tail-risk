@@ -150,12 +150,13 @@ footer p{margin:0 0 9px; max-width:88ch} footer a{color:var(--us)}
 
 <header class="wrap">
   <p class="eyebrow">Out-of-pocket health spending &middot; United States and Nigeria</p>
-  <h1><span class="ng">Nigeria</span> is worse in the middle.<br>
-      <span class="us">America</span> is worse in the tail.</h1>
+  <h1><span class="ng">Nigeria</span> is worse in the middle and in the tail.<br>
+      Both tails are <span class="us">heavy</span>.</h1>
   <p class="standfirst">Catastrophic health spending is usually compared between
     countries with a single average. An average counts how many households cross
-    a line; it says nothing about how far past it the worst-affected go. Measure
-    the tail instead and the ordering reverses.</p>
+    a line; it says nothing about how far past it the worst-affected go. This
+    page puts the whole distribution on view, and shows why a tail comparison is
+    only as good as the way its denominator is built.</p>
 
   <div class="pair">
     <div class="side a">
@@ -166,7 +167,7 @@ footer p{margin:0 0 9px; max-width:88ch} footer a{color:var(--us)}
         <span class="val" id="us-q99"></span></div>
       <div class="metric"><span class="lab">Worst-affected 5% pay, on average</span>
         <span class="val" id="us-cvar"></span></div>
-      <div class="metric big"><span class="lab">Tail heaviness &xi;</span>
+      <div class="metric big"><span class="lab">Tail heaviness &xi; (OOP / income)</span>
         <span class="val" id="us-xi"></span></div>
     </div>
     <div class="side b">
@@ -177,7 +178,7 @@ footer p{margin:0 0 9px; max-width:88ch} footer a{color:var(--us)}
         <span class="val" id="ng-q99"></span></div>
       <div class="metric"><span class="lab">Worst-affected 5% pay, on average</span>
         <span class="val" id="ng-cvar"></span></div>
-      <div class="metric big"><span class="lab">Tail heaviness &xi;</span>
+      <div class="metric big"><span class="lab">Tail heaviness &xi; (OOP / consumption net of OOP)</span>
         <span class="val" id="ng-xi"></span></div>
     </div>
   </div>
@@ -201,7 +202,8 @@ footer p{margin:0 0 9px; max-width:88ch} footer a{color:var(--us)}
       <div class="inp">
         <label for="res">Household income or consumption, a year</label>
         <input id="res" type="text" value="$45,000" inputmode="numeric">
-        <p class="note">Income in the US comparison, consumption in the Nigerian.</p>
+        <p class="note">Income in the US comparison; consumption net of health
+          spending in the Nigerian one.</p>
       </div>
       <div class="inp">
         <label for="burden">Which is a burden of</label>
@@ -215,9 +217,9 @@ footer p{margin:0 0 9px; max-width:88ch} footer a{color:var(--us)}
   <section class="plate">
     <h2>The two distributions</h2>
     <p class="lede">Burden at every percentile. The Nigerian curve sits above
-      the American one through the middle and is overtaken in the tail &mdash;
-      not because Nigeria improves, but because the American curve accelerates.
-      Pick any group to compare.</p>
+      the American one from the median to the far tail. Pick any group to
+      compare, and switch the Nigerian denominator to see how much of the far
+      tail is a matter of construction.</p>
     <div class="chartbox"><svg id="curves" role="img"
       aria-label="Burden by percentile, United States and Nigeria"></svg></div>
     <div class="key">
@@ -227,17 +229,24 @@ footer p{margin:0 0 9px; max-width:88ch} footer a{color:var(--us)}
     </div>
     <div class="pickrow" id="pick-us"></div>
     <div class="pickrow" id="pick-ng"></div>
+    <div class="pickrow" id="pick-basis"></div>
   </section>
 
   <section class="plate">
-    <h2>How heavy is each tail?</h2>
-    <p class="lede">&xi; is the shape of a generalised Pareto distribution fitted
-      to the worst 10% of each group. Above zero the tail is heavy; above 0.5 the
-      variance is infinite, meaning the next bad case can be far worse than the
-      worst one seen. Every American group is above that line and no Nigerian
-      group is close.</p>
+    <h2>How heavy is each tail, and does the answer depend on the denominator?</h2>
+    <p class="lede">&xi; is the shape of a generalized Pareto distribution fitted
+      to the worst 10% of each distribution. Above zero the tail is heavy; above
+      0.5 the variance is infinite. Dividing Nigerian spending by a consumption
+      aggregate that already contains it (the SDG basis) bounds the ratio below
+      one and makes the Nigerian tail look light. On every construction that
+      treats the two countries alike, the two tail indices are similar and both
+      are heavy. Intervals are from a bootstrap over sampling units within
+      strata; p is for the US minus Nigeria difference.</p>
     <div class="chartbox"><svg id="xichart" role="img"
-      aria-label="Generalised Pareto tail shape by group"></svg></div>
+      aria-label="Generalized Pareto tail shape by denominator construction"></svg></div>
+    <p class="lede">Tail statistics by group, on the matched construction
+      (US out-of-pocket over income; Nigeria out-of-pocket over consumption
+      net of it).</p>
     <table id="tailtable">
       <thead><tr><th>Group</th><th>95th percentile</th>
         <th>Worst 5% average</th><th>Worst 1% average</th><th>&xi;</th></tr></thead>
@@ -246,27 +255,28 @@ footer p{margin:0 0 9px; max-width:88ch} footer a{color:var(--us)}
   </section>
 
   <section class="plate">
-    <h2>Why the shapes differ</h2>
+    <h2>What the comparison can and cannot say</h2>
     <details open>
-      <summary>The mechanism, and what this page cannot tell you</summary>
-      <p>A Nigerian household facing a bill beyond its means does not pay it. It
-        forgoes the care, sells something, or borrows within a narrow local
-        limit. The observed burden is bounded by what could be raised, and the
-        real loss shows up as untreated illness, which no spending statistic
-        records. An American household in the same position is treated and then
-        billed, and the bill can be financed. The observed burden is bounded by
-        what can be borrowed, which is a far higher ceiling. The two
-        distributions differ in shape because the two systems fail differently,
-        and only one of those failures is visible in an out-of-pocket number.</p>
+      <summary>Reading the two distributions</summary>
+      <p>Nigeria's burden is higher at every percentile from the median up, on
+        every construction of the denominator. Both countries' out-of-pocket
+        distributions are heavy-tailed, with a tail index near 0.5 whether the
+        tail is measured on the ratio or on spending in international dollars.
+        An earlier version of this page reported that the American tail was
+        heavy and the Nigerian one bounded. That contrast came from dividing
+        Nigerian spending by a consumption aggregate that contains it, which
+        caps the ratio at one; it disappears once both denominators are built
+        the same way.</p>
       <p><b>The denominators are not the same variable.</b> The American survey
         records income and no consumption; the Nigerian one records consumption
-        and unreliable income. Each country uses its own standard measure, which
-        is what WHO guidance allows, so this compares <i>relative burden</i> and
-        not welfare. Income is more volatile than consumption, which if anything
-        works against the finding rather than for it.</p>
+        and unreliable income. Neither matched construction is exact, so a
+        conclusion is only kept here if it holds on both.</p>
       <p><b>Neither survey sees forgone care.</b> A household that went without
-        treatment appears as a zero. Every figure here understates unmet need,
-        and it understates it far more in Nigeria.</p>
+        treatment appears as a zero. In the Nigerian survey, 4% of ill members
+        in the poorest fifth consulted no one because of cost, against 1% in
+        the richest fifth. In the American survey, over half of the families
+        whose out-of-pocket spending exceeded a year's income carried medical
+        debt.</p>
       <p><b>This is not a personal risk assessment.</b> Placing your ratio on a
         distribution tells you where that ratio sits among households surveyed in
         2019&ndash;2024 and 2023/24. It is not a prediction about you.</p>
@@ -276,7 +286,8 @@ footer p{margin:0 0 9px; max-width:88ch} footer a{color:var(--us)}
 
 <footer class="wrap">
   <p><b>Data.</b> <span id="f-us"></span> and <span id="f-ng"></span>. Microdata
-    are not redistributed; this page carries only each group's quantile function.</p>
+    are not redistributed; this page carries only each group's quantile function
+    and the published tail statistics.</p>
   <p><b>Paper.</b> Babalola, O. D. (2026). <i>Financial Protection against
     Health-Cost Shocks: A Harmonized US&ndash;Nigeria Comparison of Catastrophic
     Spending, Underinsurance, and Out-of-Pocket Tail Risk.</i> Working paper.
@@ -294,7 +305,8 @@ const pct = (x, d=1) => x.toFixed(d) + "%";
 const money = v => { const n = parseFloat(String(v).replace(/[^0-9.]/g, ""));
                      return isFinite(n) ? n : 0; };
 
-const S = {us: "All families", ng: "Informal sector", oop: 2500, res: 45000};
+const S = {us: "All families", ng: "Informal sector", basis: "ng", oop: 2500, res: 45000};
+const NG = () => D[S.basis];
 
 /* Percentile of a burden value within a group's quantile function. */
 function percentileOf(curve, value){
@@ -326,7 +338,7 @@ function drawCurves(){
   svg.setAttribute("width", W); svg.setAttribute("height", H);
   const iw = W - ml - mr, ih = H - mt - mb;
 
-  const cu = D.us[S.us], cn = D.ng[S.ng];
+  const cu = D.us[S.us], cn = NG()[S.ng];
   const burden = S.res > 0 ? 100 * S.oop / S.res : 0;
   const peak = Math.max(cu.q[93], cn.q[93], Math.min(burden * 1.3, 200)) * 1.12;
   const x = p => ml + ((p - 1) / 98) * iw;
@@ -376,23 +388,14 @@ function drawCurves(){
 function drawXi(){
   const svg = document.getElementById("xichart");
   clear(svg);
-  const rows = [];
-  for (const [country, key, colour] of [["United States", "us", "var(--us-line)"],
-                                        ["Nigeria", "ng", "var(--ng-line)"]]){
-    for (const g of Object.keys(D[key])){
-      const t = D.tail[country] && D.tail[country][g];
-      if (t) rows.push({g, country, colour, ...t});
-    }
-  }
-  rows.sort((a, b) => a.xi - b.xi);
-
-  const W = 940, rowH = 25, ml = 168, mr = 46, mt = 26, mb = 34;
+  const rows = D.tests.filter(t => !t.key.startsWith("poor") && t.key !== "linked_one_year");
+  const W = 940, rowH = 44, ml = 300, mr = 70, mt = 26, mb = 34;
   const H = mt + mb + rows.length * rowH;
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
   svg.setAttribute("width", W); svg.setAttribute("height", H);
   const iw = W - ml - mr;
-  const lo = Math.min(-0.45, ...rows.map(r => r.xi_lo ?? r.xi));
-  const hi = Math.max(0.95, ...rows.map(r => r.xi_hi ?? r.xi));
+  const lo = Math.min(-0.3, ...rows.map(r => Math.min(r.us_lo, r.ng_lo)));
+  const hi = Math.max(1.0, ...rows.map(r => Math.max(r.us_hi, r.ng_hi)));
   const x = v => ml + ((v - lo) / (hi - lo)) * iw;
 
   for (let v = Math.ceil(lo * 4) / 4; v <= hi; v += 0.25){
@@ -409,20 +412,32 @@ function drawXi(){
   svg.appendChild(el("text", {x:x(0.5)+5, y:mt+rows.length*rowH+14,
     class:"slab", fill:"var(--ink-3)"}, "ξ = 0.5, infinite variance"));
 
+  const short = {published: ["Published basis:", "US OOP/income, Nigeria OOP/consumption"],
+    net: ["Matched net:", "both over resources excluding OOP"],
+    gross: ["Matched gross:", "both over resources including OOP"],
+    floor: ["Matched net, denominator", "floored at the poverty line"],
+    two_year: ["US two-year average income", "(panel-linked families)"],
+    levels_household: ["OOP level per household,", "2023 international $"],
+    levels_person: ["OOP level per person,", "2023 international $"]};
   rows.forEach((r, i) => {
-    const cy = mt + i*rowH + rowH/2;
-    if (r.xi_lo != null && r.xi_hi != null){
-      svg.appendChild(el("line", {x1:x(r.xi_lo), x2:x(r.xi_hi), y1:cy, y2:cy,
-        stroke:r.colour, "stroke-width":2, "stroke-opacity":.42}));
-      for (const v of [r.xi_lo, r.xi_hi])
-        svg.appendChild(el("line", {x1:x(v), x2:x(v), y1:cy-4, y2:cy+4,
-          stroke:r.colour, "stroke-width":2, "stroke-opacity":.42}));
-    }
-    svg.appendChild(el("circle", {cx:x(r.xi), cy, r:5.5, fill:r.colour}));
-    svg.appendChild(el("text", {x:ml-11, y:cy+3.8, class:"slab",
-      "text-anchor":"end", fill:r.colour, "font-weight":"600"}, r.g));
-    svg.appendChild(el("text", {x:x(r.xi)+10, y:cy+3.8, class:"tick",
-      fill:r.colour}, (r.xi >= 0 ? "+" : "") + r.xi.toFixed(3)));
+    const y0 = mt + i*rowH;
+    const lab = short[r.key] || [r.label, ""];
+    svg.appendChild(el("text", {x:ml-11, y:y0+rowH/2-2, class:"slab",
+      "text-anchor":"end", "font-weight":"600"}, lab[0]));
+    svg.appendChild(el("text", {x:ml-11, y:y0+rowH/2+12, class:"tick",
+      "text-anchor":"end"}, lab[1]));
+    [["us", "var(--us-line)", y0 + rowH*0.32], ["ng", "var(--ng-line)", y0 + rowH*0.68]]
+      .forEach(([k, colour, cy]) => {
+        const v = r[k+"_xi"], a = r[k+"_lo"], b = r[k+"_hi"];
+        svg.appendChild(el("line", {x1:x(a), x2:x(b), y1:cy, y2:cy,
+          stroke:colour, "stroke-width":2, "stroke-opacity":.42}));
+        for (const e of [a, b])
+          svg.appendChild(el("line", {x1:x(e), x2:x(e), y1:cy-4, y2:cy+4,
+            stroke:colour, "stroke-width":2, "stroke-opacity":.42}));
+        svg.appendChild(el("circle", {cx:x(v), cy, r:5, fill:colour}));
+      });
+    svg.appendChild(el("text", {x:W-mr+8, y:y0+rowH/2+4, class:"tick",
+      fill:"var(--ink-3)"}, r.p < 0.005 ? "p < 0.01" : "p = " + r.p.toFixed(2)));
   });
 }
 
@@ -431,7 +446,7 @@ function render(){
   const burden = S.res > 0 ? 100 * S.oop / S.res : 0;
   document.getElementById("burden").value = pct(burden, 2);
 
-  const cu = D.us[S.us], cn = D.ng[S.ng];
+  const cu = D.us[S.us], cn = NG()[S.ng];
   const pu = percentileOf(cu, burden), pn = percentileOf(cn, burden);
   const ord = n => { const s = ["th","st","nd","rd"], v = n % 100;
                      return n + (s[(v - 20) % 10] || s[v] || s[0]); };
@@ -443,13 +458,14 @@ function render(){
     + `<span class="n">${ord(Math.round(pn))} percentile</span> of `
     + `<b>${S.ng.toLowerCase()}</b> in Nigeria. `
     + (pu > pn
-       ? `It is a rarer burden in America than in Nigeria &mdash; which is what
-          the averages predict, and stops being true higher up.`
-       : `It is a <b>rarer</b> burden in Nigeria than in America, even though
-          Nigeria's average is far worse. That is the tail doing the work.`);
+       ? `It is a rarer burden in the United States than in Nigeria.`
+       : `It is a rarer burden in Nigeria than in the United States.`)
+    + (S.basis === "ng" ? "" : ` (Nigerian denominator: consumption including
+          OOP, the SDG basis, which cannot exceed 100%.)`);
 
-  document.getElementById("k-us").textContent = "United States — " + S.us;
-  document.getElementById("k-ng").textContent = "Nigeria — " + S.ng;
+  document.getElementById("k-us").textContent = "United States: " + S.us;
+  document.getElementById("k-ng").textContent = "Nigeria: " + S.ng
+    + (S.basis === "ng" ? " (net of OOP)" : " (SDG basis)");
 
   drawCurves();
   drawXi();
@@ -459,8 +475,7 @@ function render(){
   for (const [country, key, cls] of [["United States", "us", "usrow"],
                                      ["Nigeria", "ng", "ngrow"]]){
     for (const g of Object.keys(D[key])){
-      const t = D.tail[country] && D.tail[country][g];
-      if (!t) continue;
+      const t = D[key][g];
       const sel = (key === "us" && g === S.us) || (key === "ng" && g === S.ng);
       rows.push(`<tr class="${cls}"><td>${g}${sel ? " ●" : ""}</td>`
         + `<td>${pct(t.var95, 1)}</td><td>${pct(t.cvar95, 1)}</td>`
@@ -491,6 +506,22 @@ function buildPicks(id, key, country){
 }
 buildPicks("pick-us", "us", "United States");
 buildPicks("pick-ng", "ng", "Nigeria");
+(function(){
+  const box = document.getElementById("pick-basis");
+  for (const [key, label] of [["ng", "Nigerian denominator: consumption net of OOP (matched)"],
+                              ["ng_published", "Nigerian denominator: consumption including OOP (SDG basis)"]]){
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "pick"; b.textContent = label;
+    b.setAttribute("aria-pressed", String(S.basis === key));
+    b.addEventListener("click", () => {
+      S.basis = key;
+      box.querySelectorAll(".pick").forEach(x =>
+        x.setAttribute("aria-pressed", String(x.textContent === label)));
+      render();
+    });
+    box.appendChild(b);
+  }
+})();
 
 for (const [id, field] of [["oop", "oop"], ["res", "res"]]){
   const e = document.getElementById(id);
@@ -511,13 +542,14 @@ document.getElementById("us-q99").textContent =
 document.getElementById("ng-q99").textContent =
   pct(D.ng["All households"].q[98], 1);
 document.getElementById("us-cvar").textContent =
-  pct(D.tail["United States"]["All families"].cvar95, 1);
+  pct(D.us["All families"].cvar95, 1);
 document.getElementById("ng-cvar").textContent =
-  pct(D.tail["Nigeria"]["All households"].cvar95, 1);
+  pct(D.ng["All households"].cvar95, 1);
+const netTest = D.tests.find(t => t.key === "net");
 document.getElementById("us-xi").textContent =
-  "+" + D.tail["United States"]["All families"].xi.toFixed(3);
+  (netTest.us_xi >= 0 ? "+" : "") + netTest.us_xi.toFixed(3);
 document.getElementById("ng-xi").textContent =
-  "+" + D.tail["Nigeria"]["All households"].xi.toFixed(3);
+  (netTest.ng_xi >= 0 ? "+" : "") + netTest.ng_xi.toFixed(3);
 
 document.getElementById("f-us").textContent = D.meta.us_source;
 document.getElementById("f-ng").textContent = D.meta.ng_source;

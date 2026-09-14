@@ -48,22 +48,30 @@ def che_flags(oop, resources, ctp, thresholds=config.CHE_BUDGET_THRESHOLDS,
 
     share = np.divide(oop, resources, out=np.full_like(oop, np.nan),
                       where=resources > 0)
-    out = {f"che{int(100 * t)}": (share > t).astype(float) for t in thresholds}
+    # A unit whose resources are unusable has an undefined burden. Its flags
+    # are missing, not zero: coding them zero would count it in the
+    # denominator as non-catastrophic and bias every rate down.
+    defined = np.isfinite(share)
+    out = {f"che{int(100 * t)}": np.where(defined, (share > t).astype(float),
+                                          np.nan)
+           for t in thresholds}
 
     # Below or at the floor: no capacity to pay, so any spending is catastrophic.
     no_capacity = ~(ctp > 0)
     ratio = np.divide(oop, ctp, out=np.full_like(oop, np.nan), where=ctp > 0)
     ctp_flag = np.where(no_capacity, (oop > 0).astype(float),
                         (ratio >= ctp_threshold).astype(float))
-    out["che_ctp40"] = ctp_flag
-    out["_no_capacity"] = no_capacity.astype(float)
+    out["che_ctp40"] = np.where(defined, ctp_flag, np.nan)
+    out["_no_capacity"] = np.where(defined, no_capacity.astype(float), np.nan)
     out["_burden"] = share
     out["_burden_ctp"] = ratio
     return out
 
 
 def _row(design, y, label, dimension, group, n):
-    est, se = design.mean(np.nan_to_num(y, nan=0.0))
+    # Design.mean excludes non-finite values, which is domain estimation over
+    # the units with a defined burden.
+    est, se = design.mean(y)
     return {"measure": label, "dimension": dimension, "group": group,
             "estimate_pct": 100 * est, "se_pct": 100 * se,
             "ci_low": 100 * (est - 1.96 * se), "ci_high": 100 * (est + 1.96 * se),
@@ -81,19 +89,26 @@ def country_table(d, flags, dims):
     rows = []
     for key, label in LABELS.items():
         y = flags[key]
-        rows.append(_row(d, y, label, "Overall", "All", len(y)))
+        fin = np.isfinite(y)
+        rows.append(_row(d, y, label, "Overall", "All", fin.sum()))
         for dim_name, series in dims.items():
             for g in pd.Series(series).dropna().unique():
                 mask = (pd.Series(series) == g).to_numpy()
-                if mask.sum() < 30:
+                if (mask & fin).sum() < 30:
                     continue
                 rows.append(_row(d.subset(mask), y, label, dim_name, str(g),
-                                 mask.sum()))
+                                 (mask & fin).sum()))
     return pd.DataFrame(rows)
 
 
-def quantile_table(d_us, b_us, d_ng, b_ng, probs=(0.25, 0.5, 0.75, 0.9,
-                                                  0.95, 0.99)):
+def quantile_table(d_us, b_us, d_ng, b_ng, b_us_gross, b_ng_net,
+                   probs=(0.25, 0.5, 0.75, 0.9, 0.95, 0.99)):
+    """Burden quantiles on the published and the matched constructions.
+
+    Published: US OOP / income, Nigeria OOP / consumption (which contains
+    OOP). Matched net: both over resources excluding health spending. Matched
+    gross: both over resources including it.
+    """
     rows = []
     for q in probs:
         u = d_us.quantile(b_us, [q])[0]
@@ -101,7 +116,45 @@ def quantile_table(d_us, b_us, d_ng, b_ng, probs=(0.25, 0.5, 0.75, 0.9,
         rows.append({"quantile": q, "us_burden_pct": 100 * u,
                      "nigeria_burden_pct": 100 * n,
                      "ratio_ng_to_us": n / u if u > 0 else np.nan,
-                     "gap_pp": 100 * (n - u)})
+                     "gap_pp": 100 * (n - u),
+                     "us_gross_pct": 100 * d_us.quantile(b_us_gross, [q])[0],
+                     "nigeria_net_pct": 100 * d_ng.quantile(b_ng_net, [q])[0]})
+    return pd.DataFrame(rows)
+
+
+def underinsurance_table(us, d_us):
+    """Commonwealth-style underinsurance among families insured all year."""
+    base = ((us["all_insured"] == 1) & (us["income_usable"] == 1)).to_numpy()
+    y = us["underinsured"].to_numpy(float)
+    rows = []
+    for label, mask in (("All families insured all year", base),
+                        ("Income below 200% of poverty",
+                         base & (us["povlev"] < 200).to_numpy()),
+                        ("Income at or above 200% of poverty",
+                         base & (us["povlev"] >= 200).to_numpy())):
+        est, se = d_us.subset(mask).mean(y)
+        rows.append({"group": label, "estimate_pct": 100 * est,
+                     "se_pct": 100 * se, "ci_low": 100 * (est - 1.96 * se),
+                     "ci_high": 100 * (est + 1.96 * se), "n": int(mask.sum())})
+    return pd.DataFrame(rows)
+
+
+def poverty_validation(us):
+    """Derived poverty threshold against the published 2024 figures.
+
+    POVLEV is family income as a percentage of the Census poverty threshold,
+    so income / (POVLEV / 100) should reproduce the threshold. After
+    deflation to 2024 dollars every year should give the 2024 figure.
+    """
+    rows = []
+    for k in (1, 2, 3, 4):
+        m = (us["n_persons"] == k) & (us["poverty_threshold"] > 0)
+        rows.append({"family_size": k,
+                     "derived_median": float(us.loc[m, "poverty_threshold"].median()),
+                     "census_threshold_modal_cell": config.CENSUS_THRESHOLDS_2024[k],
+                     "census_weighted_average": config.CENSUS_WEIGHTED_AVERAGE_2024[k],
+                     "hhs_guideline": config.HHS_GUIDELINES_2024[k],
+                     "n": int(m.sum())})
     return pd.DataFrame(rows)
 
 
@@ -152,8 +205,21 @@ def main():
     # ---------------------------------------------------------- Table 2 ----
     b_us = us_f["_burden"]
     b_ng = ng_f["_burden"]
-    t2 = quantile_table(d_us, b_us, d_ng, b_ng)
+    inc_ok = us["faminc"].where(us_ok)
+    b_us_gross = (us["oop"] / (inc_ok + us["oop"])).to_numpy(float)
+    b_ng_net = ng["burden_net"].to_numpy(float)
+    t2 = quantile_table(d_us, b_us, d_ng, b_ng, b_us_gross, b_ng_net)
     t2.to_csv(config.TABLES / "table2_burden_quantiles.csv", index=False)
+
+    t1c = underinsurance_table(us, d_us)
+    t1c.to_csv(config.TABLES / "table1c_underinsurance.csv", index=False)
+    print("\n=== Underinsurance (outcome, families insured all year) ===")
+    print(t1c.to_string(index=False, float_format=lambda x: f"{x:,.2f}"))
+
+    ta1 = poverty_validation(us)
+    ta1.to_csv(config.TABLES / "tableA1_poverty_validation.csv", index=False)
+    print("\n=== Derived poverty threshold against published 2024 figures ===")
+    print(ta1.to_string(index=False))
     print("\n=== Burden distribution: OOP as a share of resources ===")
     print(f"  {'quantile':>9} {'US':>9} {'Nigeria':>9} {'ratio':>7}")
     for _, r in t2.iterrows():
