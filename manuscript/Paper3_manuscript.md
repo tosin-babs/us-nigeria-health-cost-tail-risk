@@ -6,7 +6,7 @@
 
 ² Department of Actuarial Science, University of Lagos, Lagos, Nigeria.
 
-³ Department of Epidemiology and Medical Statistics, University of Ibadan, Ibadan, Nigeria.
+³ Federal University of Technology, Akure, Nigeria.
 
 **Word count.** 5,557 excluding abstract, tables and references.
 
@@ -32,7 +32,7 @@ Catastrophic health expenditure is the standard summary of financial protection.
 
 Actuaries summarize the far end of a loss distribution with a different set of tools: a high quantile (Value-at-Risk), the mean loss beyond it (expected shortfall, or Conditional Value-at-Risk), and the shape parameter of a generalized Pareto distribution fitted to exceedances over a high threshold, which measures how heavy the tail is (Davison and Smith 1990; Artzner et al. 1999; Klugman, Panjer and Willmot 2019). These measures are rarely applied to household health spending and, as far as we can find, have not been used to compare a high-income and a low-income health system on a common basis.
 
-This paper does that for the United States and Nigeria. The two systems are near opposites. Nigeria finances 72% of health spending out of household pockets and insures 2% of households in the survey used here; the United States finances 11% out of pocket, spends over $13,000 per person a year, and insures nine families in ten for the full year (World Bank 2025). We asked three questions. How do the two countries compare on the conventional catastrophic-spending measures? How do they compare on tail measures? And do the answers survive the differences between the two surveys?
+This paper does that for the United States and Nigeria. The two systems are near opposites. Nigeria finances 72% of health spending out of household pockets and insures 2% of households in the survey used here; the United States finances 11% out of pocket, spends over $13,000 per person a year, and insures nine families in ten for the full year (World Bank n.d.). We asked three questions. How do the two countries compare on the conventional catastrophic-spending measures? How do they compare on tail measures? And do the answers survive the differences between the two surveys?
 
 The third question turned out to decide the second. Family income in the US survey does not contain the out-of-pocket spending that is divided into it, so the ratio can exceed one and its upper tail is unbounded. The Nigerian consumption aggregate, built to the SDG convention, contains that spending, so the ratio is bounded below one by construction and a generalized Pareto fit to it must find a light tail. On the published denominators the American tail index is 0.67 and the Nigerian 0.09, a contrast that an earlier draft of this paper reported as its main result. On any construction that treats the two countries alike, the two indices are within sampling error of each other and both are heavy. We report the artifact, its correction, and what remains once it is removed.
 
@@ -203,7 +203,6 @@ On identical catastrophic-spending definitions Nigerian households cross the 10%
 
 **Ethics.** The analysis uses de-identified secondary survey data and did not require ethical approval.
 
-**CRediT statement.** **Oluwatosin Dorcas Babalola**: conceptualization, methodology, software, formal analysis, data curation, writing (original draft), writing (review and editing). **Eniola Zainab Olamilekan**: roles to be confirmed by the authors. **Adebolu Temitope**: roles to be confirmed by the authors.
 
 ---
 
@@ -231,6 +230,6 @@ On identical catastrophic-spending definitions Nigerian households cross the 10%
 20. Wagstaff, A., & van Doorslaer, E. (2003). Catastrophe and impoverishment in paying for health care: with applications to Vietnam 1993–1998. *Health Economics*, 12(11), 921–933. doi:10.1002/hec.776
 21. Wagstaff, A., Flores, G., Hsu, J., Smitz, M.-F., et al. (2018). Progress on catastrophic health spending in 133 countries: a retrospective observational study. *The Lancet Global Health*, 6(2), e169–e179. doi:10.1016/S2214-109X(17)30429-1
 22. WHO & World Bank (2023). *Tracking Universal Health Coverage: 2023 Global Monitoring Report*. Geneva: World Health Organization and Washington, DC: World Bank. doi:10.1596/40348
-23. World Bank (2025). *World Development Indicators*: out-of-pocket expenditure as a share of current health expenditure (SH.XPD.OOPC.CH.ZS) and current health expenditure per capita (SH.XPD.CHEX.PC.CD), 2023 values. https://data.worldbank.org (accessed September 2026).
+23. World Bank (n.d.). *World Development Indicators*: out-of-pocket expenditure as a share of current health expenditure (SH.XPD.OOPC.CH.ZS) and current health expenditure per capita (SH.XPD.CHEX.PC.CD), 2023 values. https://data.worldbank.org (accessed September 2026).
 24. Xu, K., Evans, D. B., Kawabata, K., Zeramdini, R., Klavus, J., & Murray, C. J. L. (2003). Household catastrophic health expenditure: a multicountry analysis. *The Lancet*, 362(9378), 111–117. doi:10.1016/S0140-6736(03)13861-5
-25. Babalola, O. D. (2026). *Measuring the Health-Protection Gap and Actuarially Pricing Informal-Sector Health Insurance under Nigeria's NHIA Act 2022*. Working paper. (Companion paper; supplies the Nigerian analysis file.)
+25. Babalola, O. D., Iroko, O. E., & Oyinlade, O. (n.d.). *Measuring the Health-Protection Gap and Actuarially Pricing Informal-Sector Health Insurance under Nigeria's NHIA Act 2022*. Working paper. (Companion paper; supplies the Nigerian analysis file.)

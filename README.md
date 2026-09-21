@@ -180,7 +180,7 @@ weighted quantiles. It is survey-agnostic and used unchanged on MEPS.
 
 - Oluwatosin Dorcas Babalola, Department of Actuarial Science and Quantitative Risk Analysis and Management, Georgia State University, Atlanta, GA, USA, obabalola4@student.gsu.edu (corresponding)
 - Eniola Zainab Olamilekan, Department of Actuarial Science, University of Lagos, Lagos, Nigeria
-- Adebolu Temitope, Department of Epidemiology and Medical Statistics, University of Ibadan, Ibadan, Nigeria
+- Adebolu Temitope, Federal University of Technology, Akure, Nigeria
 
 ## License
 
