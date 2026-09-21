@@ -1,8 +1,12 @@
 # Financial Protection against Health-Cost Shocks: A Harmonized US–Nigeria Comparison of Catastrophic Spending, Underinsurance, and Out-of-Pocket Tail Risk
 
-**Oluwatosin Dorcas Babalola**¹ *(corresponding author)*
+**Oluwatosin Dorcas Babalola**¹ *(corresponding author)*, **Eniola Zainab Olamilekan**², **Adebolu Temitope**³
 
 ¹ Department of Actuarial Science and Quantitative Risk Analysis and Management, Georgia State University, Atlanta, GA, USA. obabalola4@student.gsu.edu
+
+² Department of Actuarial Science, University of Lagos, Lagos, Nigeria.
+
+³ Department of Epidemiology and Medical Statistics, University of Ibadan, Ibadan, Nigeria.
 
 **Word count.** 5,557 excluding abstract, tables and references.
 
@@ -199,7 +203,7 @@ On identical catastrophic-spending definitions Nigerian households cross the 10%
 
 **Ethics.** The analysis uses de-identified secondary survey data and did not require ethical approval.
 
-**CRediT statement.** **Oluwatosin Dorcas Babalola**: conceptualization, methodology, software, formal analysis, data curation, writing (original draft), writing (review and editing).
+**CRediT statement.** **Oluwatosin Dorcas Babalola**: conceptualization, methodology, software, formal analysis, data curation, writing (original draft), writing (review and editing). **Eniola Zainab Olamilekan**: roles to be confirmed by the authors. **Adebolu Temitope**: roles to be confirmed by the authors.
 
 ---
 
