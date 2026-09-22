@@ -179,8 +179,8 @@ weighted quantiles. It is survey-agnostic and used unchanged on MEPS.
 ## Authors
 
 - Oluwatosin Dorcas Babalola, Department of Actuarial Science and Quantitative Risk Analysis and Management, Georgia State University, Atlanta, GA, USA, obabalola4@student.gsu.edu (corresponding)
-- Eniola Zainab Olamilekan, Department of Actuarial Science, University of Lagos, Lagos, Nigeria
-- Chisom Adiegwu, Department of Actuarial Science and Quantitative Risk Analysis and Management, Georgia State University, Atlanta, GA, USA
+- Eniola Zainab Olamilekan, Department of Actuarial Science, University of Lagos, Lagos, Nigeria, olamilekaneniolazainab@gmail.com
+- Chisom G. Adiegwu, Department of Actuarial Science and Quantitative Risk Analysis and Management, Georgia State University, Atlanta, GA, USA, Cadiegwu1@student.gsu.edu
 
 ## License
 
