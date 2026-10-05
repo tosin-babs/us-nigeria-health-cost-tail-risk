@@ -2,11 +2,13 @@
 
 **Oluwatosin Dorcas Babalola**¹ *(corresponding author)*, **Eniola Zainab Olamilekan**², **Chisom G. Adiegwu**¹
 
-¹ Department of Actuarial Science and Quantitative Risk Analysis and Management, Georgia State University, Atlanta, GA, USA.
+¹ Maurice R. Greenberg School of Risk Science, J. Mack Robinson College of Business, Georgia State University, Atlanta, GA, USA.
 
-² Department of Actuarial Science, University of Lagos, Lagos, Nigeria.
+² Independent researcher.
 
 **Email.** Oluwatosin Dorcas Babalola: obabalola4@student.gsu.edu; Eniola Zainab Olamilekan: olamilekaneniolazainab@gmail.com; Chisom G. Adiegwu: Cadiegwu1@student.gsu.edu.
+
+**Date.** September 2024.
 
 **Word count.** 5,557 excluding abstract, tables and references.
 
@@ -232,4 +234,4 @@ On identical catastrophic-spending definitions Nigerian households cross the 10%
 22. WHO & World Bank (2023). *Tracking Universal Health Coverage: 2023 Global Monitoring Report*. Geneva: World Health Organization and Washington, DC: World Bank. doi:10.1596/40348
 23. World Bank (n.d.). *World Development Indicators*: out-of-pocket expenditure as a share of current health expenditure (SH.XPD.OOPC.CH.ZS) and current health expenditure per capita (SH.XPD.CHEX.PC.CD), 2023 values. https://data.worldbank.org.
 24. Xu, K., Evans, D. B., Kawabata, K., Zeramdini, R., Klavus, J., & Murray, C. J. L. (2003). Household catastrophic health expenditure: a multicountry analysis. *The Lancet*, 362(9378), 111–117. doi:10.1016/S0140-6736(03)13861-5
-25. Babalola, O. D., Iroko, O. E., & Oyinlade, O. (n.d.). *Measuring the Health-Protection Gap and Actuarially Pricing Informal-Sector Health Insurance under Nigeria's NHIA Act 2022*. Working paper. (Companion paper; supplies the Nigerian analysis file.)
+25. Babalola, O. D., Iroko, O. E., & Oyinlade, O. (2023). *Measuring the Health-Protection Gap and Actuarially Pricing Informal-Sector Health Insurance under Nigeria's NHIA Act 2022*. Working paper. (Companion paper; supplies the Nigerian analysis file.)
