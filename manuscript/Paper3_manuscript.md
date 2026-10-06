@@ -6,7 +6,7 @@
 
 ² Independent researcher.
 
-**Email.** Oluwatosin Dorcas Babalola: obabalola4@student.gsu.edu; Eniola Zainab Olamilekan: olamilekaneniolazainab@gmail.com; Chisom G. Adiegwu: Cadiegwu1@student.gsu.edu.
+**Email.** Oluwatosin Dorcas Babalola: oluwatosinbabalola99@gmail.com; Eniola Zainab Olamilekan: olamilekaneniolazainab@gmail.com; Chisom G. Adiegwu: Cadiegwu1@student.gsu.edu.
 
 **Date.** December 2024.
 
